@@ -69,6 +69,62 @@
                 font-size: 1.1rem !important;
             }
         }
+        .glass {
+            background: rgba(255,255,255,0.7);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .form-section {
+            background: linear-gradient(135deg, #fff 60%, #f3e8ff 100%);
+            box-shadow: 0 4px 24px 0 rgba(103,58,183,0.10);
+            border-radius: 1.5rem;
+            border: 1px solid #ede7f6;
+        }
+        .form-section input:focus, .form-section textarea:focus, .form-section select:focus {
+            border-color: #673AB7 !important;
+            box-shadow: 0 0 0 2px #673AB722;
+        }
+        .form-section input, .form-section textarea, .form-section select {
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .form-section label {
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+        .form-section button[type="submit"] {
+            background: linear-gradient(90deg, #673AB7 0%, #009688 100%);
+            box-shadow: 0 2px 8px 0 #673ab71a;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+        .form-section button[type="submit"]:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 24px 0 #673ab733;
+        }
+        .info-section {
+            background: linear-gradient(135deg, #673AB7 60%, #009688 100%);
+            color: #fff;
+            box-shadow: 0 4px 24px 0 rgba(103,58,183,0.18);
+            border-radius: 1.5rem;
+            border: 1px solid #ede7f6;
+        }
+        .info-section h2 {
+            text-shadow: 0 2px 8px #0002;
+        }
+        .info-section .icon-bg {
+            background: rgba(255,255,255,0.12);
+            border-radius: 1rem;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .info-section svg {
+            filter: drop-shadow(0 2px 6px #0002);
+        }
     </style>
 </head>
 <body class="bg-neutral">
@@ -83,52 +139,51 @@
     </nav>
 
     <div class="max-w-7xl mx-auto py-12 px-2 sm:px-2 lg:px-8">
-        <div class="bg-gradient-to-br from-primary/5 to-secondary/5 shadow-2xl rounded-2xl overflow-hidden">
-            <div class="grid grid-cols-1 gap-0">
+        <div class="glass shadow-2xl rounded-2xl overflow-hidden">
+            <div class="grid lg:grid-cols-5 gap-0">
                 <!-- Left Section - Info -->
-                <div class="lg:col-span-2 bg-gradient-to-br from-primary to-secondary p-8 text-white">
-                    <h2 class="text-3xl font-bold mb-6">Start Your Project</h2>
-                    <p class="mb-8 text-white/80">Transform your ideas into reality with our expert development team.</p>
-                    
-                    <div class="space-y-6">
+                <div class="info-section lg:col-span-2 p-10 flex flex-col justify-center">
+                    <h2 class="text-4xl font-extrabold mb-6 drop-shadow">Start Your Project</h2>
+                    <p class="mb-8 text-white/90 text-lg">Transform your ideas into reality with our expert development team.</p>
+                    <div class="space-y-8">
                         <div class="flex items-start space-x-4">
-                            <div class="p-3 bg-white/10 rounded-lg">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="icon-bg">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-semibold">Expert Development</h3>
-                                <p class="text-sm text-white/70">Skilled team with years of experience</p>
+                                <h3 class="font-semibold text-xl">Expert Development</h3>
+                                <p class="text-white/80 text-base">Skilled team with years of experience</p>
                             </div>
                         </div>
                         <div class="flex items-start space-x-4">
-                            <div class="p-3 bg-white/10 rounded-lg">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="icon-bg">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-semibold">Fast Delivery</h3>
-                                <p class="text-sm text-white/70">Quick turnaround on all projects</p>
+                                <h3 class="font-semibold text-xl">Fast Delivery</h3>
+                                <p class="text-white/80 text-base">Quick turnaround on all projects</p>
                             </div>
                         </div>
                         <div class="flex items-start space-x-4">
-                            <div class="p-3 bg-white/10 rounded-lg">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="icon-bg">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-semibold">Secure & Reliable</h3>
-                                <p class="text-sm text-white/70">Your project is in safe hands</p>
+                                <h3 class="font-semibold text-xl">Secure & Reliable</h3>
+                                <p class="text-white/80 text-base">Your project is in safe hands</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Section - Form -->
-                <div class="lg:col-span-3 p-8 bg-white">
+                <div class="form-section lg:col-span-3 p-10 bg-white">
                     <form action="{{ url_for('order') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div class="space-y-2">

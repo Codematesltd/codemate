@@ -54,6 +54,21 @@
                 border-radius: 0.5rem !important;
             }
         }
+        .glass {
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .project-card {
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .project-card:hover {
+            box-shadow: 0 8px 32px 0 #673ab733, 0 2px 8px 0 #00968822;
+            transform: translateY(-4px) scale(1.01);
+            border-color: #FFD700 !important;
+        }
     </style>
 </head>
 <body class="bg-neutral">
@@ -72,7 +87,7 @@
         </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto py-6 sm:px-2 px-2 lg:px-8">
+    <div class="glass max-w-7xl mx-auto py-6 sm:px-2 px-2 lg:px-8">
         <!-- Project Status Tabs -->
         <div class="mb-6 border-b border-gray-200">
             <div class="flex space-x-8">

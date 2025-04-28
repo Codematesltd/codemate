@@ -39,6 +39,27 @@
                 border-radius: 0.5rem !important;
             }
         }
+        .glass {
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .project-card {
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .project-card:hover {
+            box-shadow: 0 8px 32px 0 #673ab733, 0 2px 8px 0 #00968822;
+            transform: translateY(-4px) scale(1.01);
+            border-color: #FFD700 !important;
+        }
+        .bg-gradient-to-r {
+            background: linear-gradient(90deg, #673AB7 0%, #009688 100%) !important;
+        }
+        .rounded-xl, .rounded-lg {
+            border-radius: 1.25rem !important;
+        }
     </style>
 </head>
 <body class="bg-neutral">
@@ -77,7 +98,7 @@
         {% if projects %}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {% for project in projects %}
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="glass project-card bg-white rounded-xl shadow-lg overflow-hidden">
                 <!-- Project Header -->
                 <div class="bg-gradient-to-r from-primary to-secondary p-4 text-white">
                     <div class="flex justify-between items-start">
