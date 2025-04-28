@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMates - Your Trusted Development Partner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#673AB7',    // Deep Purple
+                        secondary: '#009688',  // Teal
+                        accent: '#FFD700',     // Gold
+                        neutral: '#FFFFFF'     // White
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral">
+    <!-- Navigation -->
+    <nav class="bg-primary shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <h1 class="text-2xl font-bold text-white">CodeMates</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ url_for('client_login') }}" class="text-white/100 hover:text-white">Sign In</a>
+                    <a href="{{ url_for('order') }}" class="bg-accent text-primary px-4 py-2 rounded-md hover:bg-accent/90">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-primary to-secondary">
+        <!-- Hero Carousel -->
+        <div class="relative h-[600px]">
+            <div class="overflow-hidden h-full">
+                <div class="flex transition-transform duration-500 ease-in-out" id="heroCarousel">
+                    <!-- Slide 1: Yukti Fest College Website -->
+                    <div class="min-w-full relative">
+                        <img src="/static/images/vtu.png" alt="Yukti Fest College Website" class="w-full h-[600px] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                                <h2 class="text-5xl font-bold mb-4">Yukti Fest College Website</h2>
+                                <p class="text-xl mb-8 max-w-2xl">
+                                    A vibrant and responsive website designed to showcase Yukti Fest, featuring event details, registration, schedules, and live updates for participants and visitors.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2: AI News Web App -->
+                    <div class="min-w-full relative">
+                        <img src="/static/images/news.png" alt="AI News Web App" class="w-full h-[600px] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                                <h2 class="text-5xl font-bold mb-4">AI News Web App</h2>
+                                <p class="text-xl mb-8 max-w-2xl">
+                                    An intelligent news platform that uses AI to curate and summarize trending news articles, delivering personalized and real-time updates to users.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3: KisanSetu -->
+                    <div class="min-w-full relative">
+                        <img src="/static/images/kisansetu.png" alt="KisanSetu" class="w-full h-[600px] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                                <h2 class="text-5xl font-bold mb-4">KisanSetu</h2>
+                                <p class="text-xl mb-8 max-w-2xl">
+                                    A farmer-focused platform connecting farmers directly to buyers and services, offering market rates, weather updates, and agricultural resources to empower rural communities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel Controls -->
+            <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white" onclick="moveCarousel(-1)">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white" onclick="moveCarousel(1)">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
+                <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="moveCarousel(0)"></button>
+                <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="moveCarousel(1)"></button>
+                <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" onclick="moveCarousel(2)"></button>
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
+            <h1 class="text-5xl font-bold text-neutral mb-4">Code, Analyze, Deploy</h1>
+            <p class="text-xl text-neutral/90 mb-8">End-to-End Tech Solutions for Your Business</p>
+            <a href="{{ url_for('order') }}" class="bg-accent text-primary font-semibold px-8 py-3 rounded-lg text-lg hover:bg-accent/90 transition-colors">Start Your Project</a>
+        </div>
+    </div>
+
+    
+    <!-- Services -->
+    <section class="bg-neutral py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">Our Services</h2>
+            <div class="relative">
+                <div class="overflow-hidden">
+                    <div class="flex transition-transform duration-500 ease-in-out" id="servicesSlider" style="will-change: transform;">
+                        <!-- UI/UX Design -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">UI/UX Design</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Crafting intuitive, user-centric interfaces that boost engagement and conversions. From wireframes to prototypes, we design experiences users love.</p>
+                            </div>
+                        </div>
+                        <!-- Frontend Development -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">Frontend Development</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Building responsive, high-performance web apps with React, Angular, or Vue. Pixel-perfect code that works flawlessly across all devices.</p>
+                            </div>
+                        </div>
+                        <!-- Backend Development -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">Backend Development</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Scalable server-side solutions powered by Node.js, Django, or Spring. Secure APIs, databases, and cloud architecture tailored to your needs.</p>
+                            </div>
+                        </div>
+                        <!-- Data Analysis -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">Data Analysis</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Transform raw data into actionable insights. Advanced analytics with Python, SQL, and Power BI to drive smarter business decisions.</p>
+                            </div>
+                        </div>
+                        <!-- Data Science -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">Data Science</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Predictive modeling, NLP, and statistical analysis to uncover hidden patterns. Turn data into your competitive edge.</p>
+                            </div>
+                        </div>
+                        <!-- ML Models -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">ML Models</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Custom machine learning solutions for automation, recommendations, and AI-driven growth. Deploy models that learn and adapt.</p>
+                            </div>
+                        </div>
+                        <!-- Debugging & Optimization -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">Debugging & Optimization</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">Fix bugs, bottlenecks, and security gaps fast. We troubleshoot full-stack systems to keep your projects running smoothly.</p>
+                            </div>
+                        </div>
+                        <!-- Full-Stack Web Development -->
+                        <div class="min-w-full px-4">
+                            <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-secondary max-w-3xl mx-auto">
+                                <h3 class="font-bold text-2xl mb-6 text-primary">Full-Stack Web Development</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed">End-to-end web solutions—from UI to databases. One team, seamless integration, and faster time-to-market.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="prevService" type="button" class="absolute left-0 top-1/2 -translate-y-1/2 bg-primary/10 hover:bg-primary/20 p-3 rounded-full text-primary z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button id="nextService" type="button" class="absolute right-0 top-1/2 -translate-y-1/2 bg-primary/10 hover:bg-primary/20 p-3 rounded-full text-primary z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+                <div class="flex justify-center mt-8 space-x-2" id="serviceIndicators">
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/50"></button>
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/20"></button>
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/20"></button>
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/20"></button>
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/20"></button>
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/20"></button>
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/20"></button>
+                    <button type="button" class="w-3 h-3 rounded-full bg-primary/20"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="bg-secondary/10 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">Meet Our Developers</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                    <h3 class="font-bold text-xl text-white">John Doe</h3>
+                    <p class="text-white/80">Full Stack Developer</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                    <h3 class="font-bold text-xl text-white">Jane Smith</h3>
+                    <p class="text-white/80">UI/UX Designer</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                    <h3 class="font-bold text-xl text-white">Mike Johnson</h3>
+                    <p class="text-white/80">Mobile Developer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="bg-neutral py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-8 text-primary">Ready to Start Your Project?</h2>
+            <div class="space-x-4">
+                <a href="{{ url_for('order') }}" class="bg-accent text-primary font-semibold px-6 py-3 rounded-lg inline-block hover:bg-accent/90 transition-colors">Get Started</a>
+                <a href="mailto:contact@codemates.com" class="text-primary px-6 py-3 rounded-lg inline-block border-2 border-primary hover:bg-primary hover:text-white transition-colors">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">CodeMates</h3>
+                    <p class="text-gray-400">Your trusted development partner</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact</h3>
+                    <p class="text-gray-400">contact@codemates.com</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Follow Us</h3>
+                    <div class="space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">Twitter</a>
+                        <a href="#" class="text-gray-400 hover:text-white">LinkedIn</a>
+                        <a href="#" class="text-gray-400 hover:text-white">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Hero Carousel
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroCarousel = document.getElementById('heroCarousel');
+            const slides = document.querySelectorAll('#heroCarousel > div');
+            const indicators = document.querySelectorAll('[onclick^="moveCarousel"]');
+            let currentSlide = 0;
+
+            function updateCarousel() {
+                heroCarousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('bg-white', index === currentSlide);
+                    indicator.classList.toggle('bg-white/50', index !== currentSlide);
+                });
+            }
+
+            // Auto advance
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateCarousel();
+            }, 2000);
+
+            // Manual navigation
+            window.moveCarousel = function(index) {
+                currentSlide = index;
+                updateCarousel();
+            };
+
+            // Initialize
+            updateCarousel();
+        });
+
+        // Services slider code
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('servicesSlider');
+            const slides = slider.children;
+            const totalSlides = slides.length;
+            let currentSlide = 0;
+            const indicators = document.querySelectorAll('#serviceIndicators button');
+            const prevBtn = document.getElementById('prevService');
+            const nextBtn = document.getElementById('nextService');
+            let autoAdvance;
+
+            function updateSlider() {
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                indicators.forEach((btn, idx) => {
+                    btn.classList.toggle('bg-primary/50', idx === currentSlide);
+                    btn.classList.toggle('bg-primary/20', idx !== currentSlide);
+                });
+            }
+
+            function goToSlide(idx) {
+                currentSlide = idx;
+                updateSlider();
+            }
+
+            prevBtn.addEventListener('click', function() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateSlider();
+            });
+
+            nextBtn.addEventListener('click', function() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateSlider();
+            });
+
+            indicators.forEach((btn, idx) => {
+                btn.addEventListener('click', function() {
+                    goToSlide(idx);
+                });
+            });
+
+            function startAutoAdvance() {
+                autoAdvance = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateSlider();
+                }, 2500); // 2 seconds interval
+            }
+
+            function stopAutoAdvance() {
+                clearInterval(autoAdvance);
+            }
+
+            slider.parentElement.addEventListener('mouseenter', stopAutoAdvance);
+            slider.parentElement.addEventListener('mouseleave', startAutoAdvance);
+
+            updateSlider();
+            startAutoAdvance();
+        });
+    </script>
+</body>
+</html>

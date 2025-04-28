@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Project - CodeMates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#673AB7',
+                        secondary: '#009688',
+                        accent: '#FFD700',
+                        neutral: '#FFFFFF'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" rel="stylesheet">
+    <style>
+        .country-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .country-option .flag {
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        select option {
+            font-family: system-ui;  /* Use system font for better emoji support */
+        }
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #673AB7;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 0.7s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+    </style>
+</head>
+<body class="bg-neutral">
+    <nav class="bg-primary shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="{{ url_for('index') }}" class="text-2xl font-bold text-white">CodeMates</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-br from-primary/5 to-secondary/5 shadow-2xl rounded-2xl overflow-hidden">
+            <div class="grid lg:grid-cols-5 gap-0">
+                <!-- Left Section - Info -->
+                <div class="lg:col-span-2 bg-gradient-to-br from-primary to-secondary p-8 text-white">
+                    <h2 class="text-3xl font-bold mb-6">Start Your Project</h2>
+                    <p class="mb-8 text-white/80">Transform your ideas into reality with our expert development team.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="p-3 bg-white/10 rounded-lg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Expert Development</h3>
+                                <p class="text-sm text-white/70">Skilled team with years of experience</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="p-3 bg-white/10 rounded-lg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Fast Delivery</h3>
+                                <p class="text-sm text-white/70">Quick turnaround on all projects</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="p-3 bg-white/10 rounded-lg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Secure & Reliable</h3>
+                                <p class="text-sm text-white/70">Your project is in safe hands</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section - Form -->
+                <div class="lg:col-span-3 p-8 bg-white">
+                    <form action="{{ url_for('order') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="name" class="block text-sm font-medium text-primary">Full Name</label>
+                                <input type="text" name="name" id="name" required
+                                    pattern="[A-Za-z\s]+"
+                                    class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
+                                    oninvalid="this.setCustomValidity('Please enter a valid name (letters only)')"
+                                    oninput="this.setCustomValidity('')">
+                                <p class="text-red-500 text-xs mt-1 hidden" id="nameError"></p>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="email" class="block text-sm font-medium text-primary">Email</label>
+                                <input type="email" name="email" id="email" required
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                    class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
+                                    oninvalid="this.setCustomValidity('Please enter a valid email address')"
+                                    oninput="this.setCustomValidity('')">
+                                <p class="text-red-500 text-xs mt-1 hidden" id="emailError"></p>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="phone" class="block text-sm font-medium text-primary">Phone Number</label>
+                                <div class="flex gap-2">
+                                    <select name="country_code" id="country_code" required 
+                                        class="block w-[180px] px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors text-base">
+                                        <option value="+91" selected>🇮🇳 +91 India</option>
+                                        <option value="+1">🇺🇸 +1 USA</option>
+                                        <option value="+44">🇬🇧 +44 UK</option>
+                                        <option value="+61">🇦🇺 +61 Australia</option>
+                                        <option value="+86">🇨🇳 +86 China</option>
+                                        <option value="+81">🇯🇵 +81 Japan</option>
+                                        <option value="+49">🇩🇪 +49 Germany</option>
+                                        <option value="+33">🇫🇷 +33 France</option>
+                                        <option value="+7">🇷🇺 +7 Russia</option>
+                                        <option value="+55">🇧🇷 +55 Brazil</option>
+                                        <option value="+39">🇮🇹 +39 Italy</option>
+                                        <option value="+34">🇪🇸 +34 Spain</option>
+                                        <option value="+82">🇰🇷 +82 South Korea</option>
+                                        <option value="+52">🇲🇽 +52 Mexico</option>
+                                        <option value="+65">🇸🇬 +65 Singapore</option>
+                                        <option value="+971">🇦🇪 +971 UAE</option>
+                                        <option value="+966">🇸🇦 +966 Saudi Arabia</option>
+                                        <option value="+20">🇪🇬 +20 Egypt</option>
+                                        <option value="+27">🇿🇦 +27 South Africa</option>
+                                        <option value="+234">🇳🇬 +234 Nigeria</option>
+                                        <option value="+90">🇹🇷 +90 Turkey</option>
+                                    </select>
+                                    <input type="tel" name="phone" id="phone" required 
+                                        class="block flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
+                                        placeholder="Enter phone number">
+                                </div>
+                                <p class="text-red-500 text-xs mt-1 hidden" id="phoneError"></p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="service" class="block text-sm font-medium text-primary">Service Required</label>
+                            <select name="service" id="service" required
+                                class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors">
+                                <option value="">Select a service...</option>
+                                <option value="ui_ux">UI/UX Design</option>
+                                <option value="frontend">Frontend Development</option>
+                                <option value="backend">Backend Development</option>
+                                <option value="data_analysis">Data Analysis</option>
+                                <option value="data_science">Data Science</option>
+                                <option value="ml_models">ML Models</option>
+                                <option value="debugging">Debugging & Optimization</option>
+                                <option value="full_stack">Full-Stack Development</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-primary mb-3">Additional Services</label>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                                    <input type="checkbox" name="additional_services" value="seo" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                    <span class="ml-3 text-sm">SEO Optimization</span>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                                    <input type="checkbox" name="additional_services" value="hosting" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                    <span class="ml-3 text-sm">Hosting Setup</span>
+                                </label>
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                                    <input type="checkbox" name="additional_services" value="maintenance" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                    <span class="ml-3 text-sm">Maintenance Package</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="requirements" class="block text-sm font-medium text-primary">Project Requirements</label>
+                            <textarea name="requirements" id="requirements" rows="4" required
+                                class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
+                                placeholder="Please describe your project requirements..."></textarea>
+                        </div>
+
+                        <!-- Reference Design Section -->
+                        <div class="space-y-4">
+                            <div class="border-t-2 border-gray-100 pt-4">
+                                <label class="block text-sm font-medium text-primary mb-2">Reference Designs & Images</label>
+                                <div class="space-y-4">
+                                    <!-- Reference URLs -->
+                                    <div>
+                                        <label for="reference_urls" class="block text-sm text-gray-600 mb-2">Reference Website URLs</label>
+                                        <textarea name="reference_urls" id="reference_urls" rows="2" 
+                                            class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
+                                            placeholder="Enter URLs of websites you like (one per line)"></textarea>
+                                    </div>
+
+                                    <!-- File Upload -->
+                                    <div class="space-y-2">
+                                        <label class="block text-sm text-gray-600">Upload Reference Images</label>
+                                        <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-lg hover:border-primary/50 transition-colors">
+                                            <div class="space-y-2 text-center">
+                                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4-4m4-4h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <div class="flex text-sm text-gray-600">
+                                                    <label for="reference_images" class="relative cursor-pointer bg-neutral rounded-md font-medium text-primary hover:text-secondary focus-within:outline-none">
+                                                        <span>Upload images</span>
+                                                        <input id="reference_images" name="reference_images" type="file" class="sr-only" multiple accept="image/*">
+                                                    </label>
+                                                    <p class="pl-1">or drag and drop</p>
+                                                </div>
+                                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 5MB each</p>
+                                            </div>
+                                        </div>
+                                        <!-- Preview Area -->
+                                        <div id="imagePreview" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+                                            <!-- Preview images will be inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                class="w-full bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-lg text-lg font-medium hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                Submit Project Request
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('email').addEventListener('input', function(e) {
+            const email = e.target.value;
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (!emailRegex.test(email)) {
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.classList.remove('hidden');
+                e.target.classList.add('border-red-500');
+                e.target.classList.remove('border-gray-200', 'focus:border-primary');
+            } else {
+                emailError.classList.add('hidden');
+                e.target.classList.remove('border-red-500');
+                e.target.classList.add('border-gray-200', 'focus:border-primary');
+            }
+        });
+
+        // Phone validation based on country
+        const phonePatterns = {
+            '+93': '^[0-9]{9}$',              // Afghanistan
+            '+355': '^[0-9]{9}$',             // Albania
+            '+213': '^[0-9]{9}$',             // Algeria
+            '+376': '^[0-9]{6}$',             // Andorra
+            '+244': '^[0-9]{9}$',             // Angola
+            '+54': '^[0-9]{10}$',             // Argentina
+            '+374': '^[0-9]{8}$',             // Armenia
+            '+61': '^4[0-9]{8}$',             // Australia
+            '+43': '^[0-9]{10}$',             // Austria
+            '+994': '^[0-9]{9}$',             // Azerbaijan
+            '+1': '^[2-9][0-9]{9}$',          // USA/Canada
+            '+44': '^[0-9]{10}$',             // UK
+            '+91': '^[6-9][0-9]{9}$',         // India
+            '+86': '^[1][3-9][0-9]{9}$',      // China
+            '+81': '^[0-9]{10}$',             // Japan
+            '+49': '^[0-9]{10,11}$',          // Germany
+            '+33': '^[0-9]{9}$',              // France
+            '+7': '^[0-9]{10}$',              // Russia
+            '+55': '^[0-9]{10,11}$',          // Brazil
+            '+39': '^[0-9]{10}$',             // Italy
+            '+34': '^[0-9]{9}$',              // Spain
+            '+82': '^[0-9]{9,10}$',           // South Korea
+            '+234': '^[0-9]{10}$',            // Nigeria
+            '+27': '^[0-9]{9}$',              // South Africa
+            '+52': '^[0-9]{10}$',             // Mexico
+            '+966': '^[0-9]{9}$',             // Saudi Arabia
+            '+65': '^[0-9]{8}$',              // Singapore
+            '+90': '^[0-9]{10}$',             // Turkey
+            '+971': '^[0-9]{9}$',             // UAE
+            // Add more validation patterns as needed
+        };
+
+        document.getElementById('phone').addEventListener('input', function(e) {
+            const phone = e.target.value;
+            const countryCode = document.getElementById('country_code').value;
+            const phoneError = document.getElementById('phoneError');
+            const phonePattern = phonePatterns[countryCode];
+            const phoneRegex = new RegExp(phonePattern);
+
+            // Remove non-numeric characters
+            e.target.value = phone.replace(/\D/g, '');
+
+            if (!phoneRegex.test(phone)) {
+                phoneError.textContent = `Please enter a valid phone number for ${countryCode}`;
+                phoneError.classList.remove('hidden');
+                e.target.classList.add('border-red-500');
+                e.target.classList.remove('border-gray-200', 'focus:border-primary');
+            } else {
+                phoneError.classList.add('hidden');
+                e.target.classList.remove('border-red-500');
+                e.target.classList.add('border-gray-200', 'focus:border-primary');
+            }
+        });
+
+        // Update validation when country code changes
+        document.getElementById('country_code').addEventListener('change', function() {
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput.value) {
+                phoneInput.dispatchEvent(new Event('input'));
+            }
+        });
+
+        // Update form submission validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const countryCode = document.getElementById('country_code').value;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const phonePattern = phonePatterns[countryCode];
+            const phoneRegex = new RegExp(phonePattern);
+
+            if (!emailRegex.test(email) || !phoneRegex.test(phone)) {
+                e.preventDefault();
+                if (!emailRegex.test(email)) {
+                    document.getElementById('emailError').classList.remove('hidden');
+                }
+                if (!phoneRegex.test(phone)) {
+                    document.getElementById('phoneError').classList.remove('hidden');
+                }
+            }
+        });
+
+        // Add this before your existing JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const countrySelect = document.getElementById('country_code');
+            
+            // Format the options to show flags properly
+            Array.from(countrySelect.options).forEach(option => {
+                const text = option.text;
+                const flag = text.match(/.*?(?= \+)/)[0]; // Extract flag emoji
+                const rest = text.substring(text.indexOf(' ') + 1); // Get the rest of the text
+                option.innerHTML = `<span class="country-option"><span class="flag">${flag}</span> ${rest}</span>`;
+            });
+        });
+
+        // Add this before existing JavaScript
+        document.getElementById('name').addEventListener('input', function(e) {
+            const name = e.target.value;
+            const nameError = document.getElementById('nameError');
+            const nameRegex = /^[A-Za-z\s]+$/;
+
+            // Remove non-letter characters
+            e.target.value = name.replace(/[^A-Za-z\s]/g, '');
+
+            if (!nameRegex.test(name)) {
+                nameError.textContent = 'Please enter a valid name (letters only)';
+                nameError.classList.remove('hidden');
+                e.target.classList.add('border-red-500');
+                e.target.classList.remove('border-gray-200', 'focus:border-primary');
+            } else {
+                nameError.classList.add('hidden');
+                e.target.classList.remove('border-red-500');
+                e.target.classList.add('border-gray-200', 'focus:border-primary');
+            }
+        });
+
+        // Update form submission validation to include name check
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value;
+            const nameRegex = /^[A-Za-z\s]+$/;
+            
+            if (!nameRegex.test(name)) {
+                e.preventDefault();
+                document.getElementById('nameError').classList.remove('hidden');
+            }
+            // ...existing validation code...
+        });
+
+        // Add this to your existing JavaScript
+        document.getElementById('reference_images').addEventListener('change', function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = ''; // Clear existing previews
+            
+            [...e.target.files].forEach(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must not exceed 5MB');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'relative group';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-32 object-cover rounded-lg" />
+                        <button type="button" class="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            onclick="this.parentElement.remove()">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    `;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Drag and drop support
+        const dropZone = document.querySelector('input[type="file"]').closest('div');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropZone.classList.add('border-primary');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('border-primary');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            document.getElementById('reference_images').files = files;
+            document.getElementById('reference_images').dispatchEvent(new Event('change'));
+        }
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.disabled = true;
+                btn.dataset.original = btn.innerHTML;
+                btn.innerHTML = '<span class="spinner"></span>';
+            }
+        });
+    </script>
+</body>
+</html>

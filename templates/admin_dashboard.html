@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CodeMates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#673AB7',    // Deep Purple
+                        secondary: '#009688',  // Teal
+                        accent: '#FFD700',     // Gold
+                        neutral: '#FFFFFF'     // White
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #673AB7;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 0.7s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+    </style>
+</head>
+<body class="bg-neutral">
+    <nav class="bg-primary shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <h1 class="text-2xl font-bold text-white">CodeMates Admin</h1>
+                </div>
+                <div class="flex items-center">
+                    <form action="{{ url_for('admin_logout') }}" method="POST">
+                        <button type="submit" class="text-white/80 hover:text-white">Sign Out</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Project Status Tabs -->
+        <div class="mb-6 border-b border-gray-200">
+            <div class="flex space-x-8">
+                <button onclick="filterProjects('all')" class="tab-btn active px-4 py-2 text-primary border-b-2 border-primary">
+                    All Projects
+                </button>
+                <button onclick="filterProjects('pending')" class="tab-btn px-4 py-2 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary">
+                    Pending Approval
+                    <span class="ml-2 px-2 py-0.5 text-xs bg-yellow-100 text-yellow-800 rounded-full pending-count"></span>
+                </button>
+                <button onclick="filterProjects('approved')" class="tab-btn px-4 py-2 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary">
+                    Approved
+                    <span class="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-800 rounded-full approved-count"></span>
+                </button>
+                <button onclick="filterProjects('declined')" class="tab-btn px-4 py-2 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary">
+                    Declined
+                    <span class="ml-2 px-2 py-0.5 text-xs bg-red-100 text-red-800 rounded-full declined-count"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for booking in bookings %}
+            <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden {% if booking.status == 'pending_approval' %}border-l-4 border-yellow-400{% elif booking.status == 'approved' %}border-l-4 border-green-400{% elif booking.status == 'declined' %}border-l-4 border-red-400{% endif %}"
+                 data-status="{{ booking.status }}">
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">{{ booking.project_id }}</h3>
+                            <p class="text-sm text-gray-600 mt-1">{{ booking.name }}</p>
+                            <p class="text-sm text-gray-500">{{ booking.email }}</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-sm 
+                            {% if booking.status == 'pending_approval' %}bg-yellow-100 text-yellow-800
+                            {% elif booking.status == 'approved' %}bg-green-100 text-green-800
+                            {% elif booking.status == 'declined' %}bg-red-100 text-red-800{% endif %}">
+                            {{ booking.status }}
+                        </span>
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-600">{{ booking.service_selected }}</p>
+                        <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ booking.requirements }}</p>
+                    </div>
+
+                    <div class="mt-6 flex space-x-3">
+                        <button onclick="openProjectDetails('{{ booking.project_id }}')"
+                            class="flex-1 bg-white text-primary border border-primary px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors">
+                            View Details
+                        </button>
+                        {% if booking.status == 'pending_approval' %}
+                        <div class="flex space-x-2">
+                            <button onclick="approveProject('{{ booking.project_id }}')"
+                                class="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
+                                Approve
+                            </button>
+                            <button onclick="declineProject('{{ booking.project_id }}')"
+                                class="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
+                                Decline
+                            </button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Project Details Modal -->
+    <div id="projectModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-neutral rounded-xl max-w-4xl w-full shadow-2xl overflow-hidden">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-primary to-secondary p-6 text-white">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold" id="projectId"></h3>
+                        <button onclick="closeProjectDetails()" class="text-white/80 hover:text-white">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="mt-2 text-white/80" id="projectStatus"></p>
+                </div>
+
+                <!-- Content -->
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Left Column -->
+                        <div class="space-y-6">
+                            <!-- Client Info -->
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h4 class="text-lg font-semibold text-primary mb-3">Client Information</h4>
+                                <div class="space-y-2">
+                                    <p><span class="text-gray-600">Name:</span> <span id="clientName" class="font-medium"></span></p>
+                                    <p><span class="text-gray-600">Email:</span> <span id="clientEmail" class="font-medium"></span></p>
+                                    <p><span class="text-gray-600">Phone:</span> <span id="clientPhone" class="font-medium"></span></p>
+                                </div>
+                            </div>
+
+                            <!-- Project Info -->
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h4 class="text-lg font-semibold text-primary mb-3">Project Details</h4>
+                                <div class="space-y-2">
+                                    <p><span class="text-gray-600">Service:</span> <span id="projectService" class="font-medium"></span></p>
+                                    <div>
+                                        <span class="text-gray-600">Requirements:</span>
+                                        <p id="projectRequirements" class="mt-2 text-gray-700 whitespace-pre-wrap"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-6">
+                            <!-- Reference Images -->
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h4 class="text-lg font-semibold text-primary mb-3">Reference Images</h4>
+                                <div id="referenceImages" class="grid grid-cols-2 gap-4">
+                                    <!-- Images will be loaded here -->
+                                </div>
+                            </div>
+
+                            <!-- Update Form -->
+                            <form id="updateProjectForm" class="bg-gray-50 rounded-lg p-4">
+                                <h4 class="text-lg font-semibold text-primary mb-3">Update Progress</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Progress</label>
+                                        <input type="number" name="progress" min="0" max="100" 
+                                            class="w-full px-3 py-2 rounded-md border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Add Note</label>
+                                        <textarea name="note" rows="3" 
+                                            class="w-full px-3 py-2 rounded-md border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary"
+                                            placeholder="Add project update note..."></textarea>
+                                    </div>
+                                    <!-- Removed Project Snapshot Upload Section -->
+                                    <button type="submit" 
+                                        class="w-full bg-gradient-to-r from-primary to-secondary text-white py-2 px-4 rounded-md hover:opacity-90 transition-opacity">
+                                        Update Project
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Project Snapshots -->
+                            <div class="bg-gray-50 rounded-lg p-4 mt-4">
+                                <h4 class="text-lg font-semibold text-primary mb-3">Progress Snapshots</h4>
+                                <div id="projectSnapshots" class="grid grid-cols-1 gap-4">
+                                    <!-- Snapshots will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openProjectDetails(projectId) {
+            document.getElementById('projectModal').classList.remove('hidden');
+            
+            // Fetch project details and snapshots
+            Promise.all([
+                fetch(`/admin/project_details/${projectId}`).then(r => r.json()),
+                fetch(`/admin/project_snapshots/${projectId}`).then(r => r.json())
+            ]).then(([projectData, snapshotsData]) => {
+                // Update header
+                document.getElementById('projectId').textContent = `Project ${projectData.project_id}`;
+                document.getElementById('projectStatus').textContent = projectData.status.toUpperCase();
+                
+                // Update client details
+                document.getElementById('clientName').textContent = projectData.name;
+                document.getElementById('clientEmail').textContent = projectData.email;
+                document.getElementById('clientPhone').textContent = projectData.mobile;
+                
+                // Update project info
+                document.getElementById('projectService').textContent = projectData.service_selected;
+                document.getElementById('projectRequirements').textContent = projectData.requirements;
+                
+                // Handle reference images
+                const imagesContainer = document.getElementById('referenceImages');
+                imagesContainer.innerHTML = '';
+                
+                if (projectData.reference_images && projectData.reference_images.length > 0) {
+                    projectData.reference_images.forEach(url => {
+                        imagesContainer.innerHTML += `
+                            <div class="relative group rounded-lg overflow-hidden">
+                                <img src="${url}" alt="Reference"
+                                    class="w-full h-32 object-cover" />
+                                <a href="${url}" target="_blank"
+                                    class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity duration-200">
+                                    <span class="text-sm font-medium">View Full</span>
+                                </a>
+                            </div>
+                        `;
+                    });
+                } else {
+                    imagesContainer.innerHTML = '<p class="text-gray-500 col-span-2 text-center py-4">No reference images uploaded</p>';
+                }
+                
+                // Update snapshots
+                const snapshotsContainer = document.getElementById('projectSnapshots');
+                snapshotsContainer.innerHTML = '';
+                
+                if (snapshotsData.snapshots && snapshotsData.snapshots.length > 0) {
+                    snapshotsData.snapshots.forEach(snapshot => {
+                        snapshotsContainer.innerHTML += `
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <img src="${snapshot.image_url}" alt="Progress Snapshot" 
+                                    class="w-full h-48 object-cover rounded-lg mb-3">
+                                <p class="text-sm text-gray-700">${snapshot.description}</p>
+                                <p class="text-xs text-gray-500 mt-2">${new Date(snapshot.created_at).toLocaleString()}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    snapshotsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">No progress snapshots yet</p>';
+                }
+                
+                // Set up form
+                setupUpdateForm(projectData.project_id);
+            });
+        }
+
+        function updateProject(projectId, form) {
+            const formData = new FormData(form);
+            formData.append('project_id', projectId);
+            
+            fetch('/admin/update_project', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function closeProjectDetails() {
+            document.getElementById('projectModal').classList.add('hidden');
+        }
+
+        // Utility: Add spinner to button and disable it
+        function showSpinner(btn) {
+            btn.disabled = true;
+            btn.dataset.original = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span>';
+        }
+
+        // Add approve project function
+        function approveProject(projectId) {
+            const btn = event.target;
+            showSpinner(btn);
+            fetch(`/admin/approve_project/${projectId}`, {
+                method: 'POST',
+                body: JSON.stringify({ project_id: projectId }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert('Project approved successfully! Client will be notified.');
+                      window.location.reload();
+                  } else {
+                      alert('Error approving project');
+                      btn.disabled = false;
+                      btn.innerHTML = btn.dataset.original;
+                  }
+              });
+        }
+
+        // Add decline project function
+        function declineProject(projectId) {
+            const btn = event.target;
+            showSpinner(btn);
+            fetch(`/admin/decline_project/${projectId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert('Project declined. Client will be notified.');
+                      window.location.reload();
+                  } else {
+                      alert('Error declining project');
+                      btn.disabled = false;
+                      btn.innerHTML = btn.dataset.original;
+                  }
+              });
+        }
+
+        // For all forms, show spinner on submit button
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const btn = form.querySelector('button[type="submit"]');
+                    if (btn) showSpinner(btn);
+                });
+            });
+        });
+
+        // Search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const projectId = row.cells[0].textContent.toLowerCase();
+                row.style.display = projectId.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        function filterProjects(status) {
+            const cards = document.querySelectorAll('.project-card');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active', 'text-primary', 'border-b-2', 'border-primary'));
+            event.target.classList.add('active', 'text-primary', 'border-b-2', 'border-primary');
+
+            cards.forEach(card => {
+                if (status === 'all' || card.dataset.status === status) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Update project counts
+        function updateProjectCounts() {
+            const cards = document.querySelectorAll('.project-card');
+            const counts = {
+                pending: 0,
+                approved: 0,
+                declined: 0
+            };
+
+            cards.forEach(card => {
+                const status = card.dataset.status;
+                if (counts[status] !== undefined) {
+                    counts[status]++;
+                }
+            });
+
+            document.querySelector('.pending-count').textContent = counts.pending;
+            document.querySelector('.approved-count').textContent = counts.approved;
+            document.querySelector('.declined-count').textContent = counts.declined;
+        }
+
+        document.addEventListener('DOMContentLoaded', updateProjectCounts);
+
+        // Update the setupUpdateForm function
+        function setupUpdateForm(projectId) {
+            const form = document.getElementById('updateProjectForm');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+                formData.append('project_id', projectId);
+                
+                fetch('/admin/update_project', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.reload();
+                    } else {
+                        alert(data.error || 'Error updating project');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error updating project');
+                });
+            };
+        }
+    </script>
+</body>
+</html>

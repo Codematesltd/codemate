@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - CodeMates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#673AB7',    // Deep Purple
+                        secondary: '#009688',  // Teal
+                        accent: '#FFD700',     // Gold
+                        neutral: '#FFFFFF'     // White
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral">
+    <nav class="bg-primary shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <h1 class="text-2xl font-bold text-white">CodeMates</h1>
+                </div>
+                <div class="flex items-center">
+                    <form action="{{ url_for('client_logout') }}" method="POST">
+                        <button type="submit" class="text-white/80 hover:text-white">Sign Out</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8 flex justify-between items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900">My Projects</h2>
+                <p class="mt-1 text-sm text-gray-600">Track your project progress and updates</p>
+            </div>
+            <a href="{{ url_for('order') }}" 
+                class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                New Project
+            </a>
+        </div>
+
+        {% if projects %}
+        <div class="grid md:grid-cols-2 gap-6">
+            {% for project in projects %}
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Project Header -->
+                <div class="bg-gradient-to-r from-primary to-secondary p-4 text-white">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-white/80">Project ID</p>
+                            <h3 class="text-lg font-bold">{{ project.project_id }}</h3>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-sm 
+                            {% if project.status == 'approved' %}
+                                bg-green-100 text-green-800
+                            {% elif project.status == 'pending_approval' %}
+                                bg-yellow-100 text-yellow-800
+                            {% elif project.status == 'declined' %}
+                                bg-red-100 text-red-800
+                            {% endif %}">
+                            {{ project.status }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Project Content -->
+                <div class="p-6 space-y-6">
+                    <!-- Service Info -->
+                    <div class="flex items-start gap-4">
+                        <div class="p-3 bg-primary/10 rounded-lg">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-900">Service</h4>
+                            <p class="text-gray-600">{{ project.service_selected }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-900">Progress</span>
+                            <span class="text-sm font-medium text-primary">{{ "%.0f"|format(project.progress|float) }}%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-500 rounded-full" 
+                                style="width: {{ project.progress if project.progress else 0 }}%">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Requirements -->
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">Requirements</h4>
+                        <p class="text-gray-600 text-sm line-clamp-3">{{ project.requirements }}</p>
+                    </div>
+
+                    <!-- Additional Services -->
+                    {% if project.additional_services %}
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">Additional Services</h4>
+                        <div class="flex flex-wrap gap-2">
+                            {% for service in project.additional_services %}
+                            <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">{{ service }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Latest Updates -->
+                    {% if project.notes %}
+                    <div class="mt-6">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">Project Updates</h4>
+                        <div class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                            {% for note in project.notes %}
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-primary">
+                                <div class="flex justify-between items-start">
+                                    <p class="text-sm text-gray-700">{{ note.note }}</p>
+                                    <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
+                                        Progress: {{ note.progress_value }}%
+                                    </span>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-2">{{ note.created_at.split('.')[0].replace('T', ' ') }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Project Progress Snapshots -->
+                    {% if project.snapshots %}
+                    <div class="mt-6">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">Progress Snapshots</h4>
+                        <div class="space-y-4">
+                            {% for snapshot in project.snapshots %}
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <img src="{{ snapshot.image_url }}" alt="Progress Snapshot" 
+                                    class="w-full h-48 object-cover rounded-lg mb-3">
+                                <p class="text-sm text-gray-700">{{ snapshot.description }}</p>
+                                <p class="text-xs text-gray-400 mt-2">{{ snapshot.created_at.split('.')[0].replace('T', ' ') }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-12 bg-white rounded-xl shadow-lg">
+            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">No Projects Yet</h3>
+            <p class="mt-2 text-sm text-gray-600 mb-6">Ready to start your first project?</p>
+            <a href="{{ url_for('order') }}" 
+                class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:opacity-90 transition-opacity">
+                Start a New Project
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Flask
+python-dotenv
+supabase
+Werkzeug
+click
+smtplib
+email
+gunicorn
