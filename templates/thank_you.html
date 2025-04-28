@@ -60,6 +60,61 @@
             border-radius: 1.5rem;
             border: 1px solid rgba(255,255,255,0.18);
         }
+        /* Add responsive styles */
+        @media (max-width: 768px) {
+            .max-w-md {
+                width: 90% !important;
+                margin: 0 auto;
+            }
+            .p-8 {
+                padding: 1.5rem !important;
+            }
+            .text-3xl {
+                font-size: 1.5rem !important;
+            }
+            .text-lg {
+                font-size: 1rem !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .p-8 {
+                padding: 1rem !important;
+            }
+            .text-3xl {
+                font-size: 1.25rem !important;
+            }
+            .text-lg {
+                font-size: 0.875rem !important;
+            }
+        }
+        /* Enhanced touch targets */
+        @media (max-width: 768px) {
+            a, button {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 16px;
+            }
+            .space-x-4 {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .space-x-4 > * {
+                width: 100%;
+                margin: 0;
+            }
+        }
+        /* Better text readability on mobile */
+        @media (max-width: 480px) {
+            .text-sm {
+                font-size: 0.875rem !important;
+                line-height: 1.5 !important;
+            }
+            .glass {
+                backdrop-filter: none;
+                background: rgba(255,255,255,0.95);
+            }
+        }
     </style>
 </head>
 <body class="bg-neutral">

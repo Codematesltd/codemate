@@ -125,6 +125,246 @@
         .info-section svg {
             filter: drop-shadow(0 2px 6px #0002);
         }
+
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .grid-cols-5 {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .info-section {
+                order: 2;
+                margin-top: 2rem;
+            }
+            
+            .form-section {
+                order: 1;
+            }
+
+            input, select, textarea {
+                font-size: 16px !important; /* Prevent zoom on mobile */
+            }
+
+            .space-y-6 > * {
+                margin-top: 1.5rem;
+            }
+
+            .icon-bg {
+                padding: 0.5rem;
+            }
+
+            .space-y-8 {
+                margin: 1rem 0;
+            }
+
+            #additionalServicesContainer {
+                grid-template-columns: 1fr !important;
+            }
+
+            .grid.md\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Touch-Friendly Improvements */
+        @media (max-width: 480px) {
+            .glass {
+                border-radius: 1rem;
+                margin: 0.5rem;
+                backdrop-filter: none;
+                background: rgba(255,255,255,0.95);
+            }
+
+            .form-section {
+                padding: 1rem !important;
+            }
+
+            .info-section {
+                padding: 1.5rem !important;
+            }
+
+            input[type="file"] {
+                padding: 0.75rem !important;
+            }
+
+            /* Better touch targets */
+            button, 
+            input[type="submit"],
+            .flex.items-center a,
+            label[for="reference_images"] {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Improve file upload area */
+            .border-dashed {
+                padding: 1rem !important;
+            }
+
+            #imagePreview {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Better form spacing */
+            .space-y-2 > * {
+                margin-top: 0.75rem !important;
+            }
+
+            /* Country code select improvements */
+            #country_code {
+                width: 140px !important;
+            }
+        }
+
+        /* Improved scroll handling */
+        @media (max-height: 800px) {
+            .py-12 {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+        }
+
+        /* Handle orientation changes */
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            .max-w-7xl {
+                max-width: 100%;
+                margin: 0.5rem;
+            }
+            
+            .grid.lg\:grid-cols-5 {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .info-section {
+                flex: 1;
+                max-width: 300px;
+            }
+
+            .form-section {
+                flex: 2;
+            }
+        }
+
+        /* Enhanced Form Container Positioning */
+        @media (max-width: 1024px) {
+            .glass {
+                margin: 0.5rem;
+                padding: 0;
+            }
+            
+            .grid.lg\:grid-cols-5 {
+                padding: 0;
+                gap: 0;
+            }
+
+            .info-section {
+                border-radius: 0;
+                border-top-left-radius: 1rem;
+                border-top-right-radius: 1rem;
+            }
+
+            .form-section {
+                border-radius: 0;
+                border-bottom-left-radius: 1rem;
+                border-bottom-right-radius: 1rem;
+            }
+        }
+
+        /* Better Form Field Spacing */
+        @media (max-width: 768px) {
+            .form-section {
+                padding: 1rem !important;
+            }
+
+            .form-section .space-y-6 > * {
+                margin-top: 1.25rem !important;
+                margin-bottom: 1.25rem !important;
+            }
+
+            .form-section input,
+            .form-section select,
+            .form-section textarea {
+                margin: 0.25rem 0;
+                width: 100% !important;
+            }
+
+            /* Fix country code select width */
+            .flex.gap-2 {
+                display: grid;
+                grid-template-columns: 120px 1fr;
+                gap: 0.5rem;
+            }
+
+            /* Better spacing for additional services */
+            #additionalServicesContainer label {
+                padding: 0.75rem;
+            }
+
+            /* File upload area improvements */
+            .border-dashed {
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Fix form overflow on small screens */
+        @media (max-width: 480px) {
+            .max-w-7xl {
+                padding: 0 !important;
+            }
+            
+            .glass.shadow-2xl {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+            }
+
+            /* Adjust file upload preview grid */
+            #imagePreview {
+                padding: 0.5rem;
+            }
+
+            /* Better button spacing */
+            .form-section button[type="submit"] {
+                margin-top: 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Fix label wrapping */
+            .form-section label {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        /* Landscape mode optimization */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            .py-12 {
+                padding: 0.5rem 0;
+            }
+
+            .grid.lg\:grid-cols-5 {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .info-section {
+                width: 300px;
+                min-width: 300px;
+                border-radius: 1rem 0 0 1rem;
+            }
+
+            .form-section {
+                flex: 1;
+                border-radius: 0 1rem 1rem 0;
+                overflow-y: auto;
+                max-height: 90vh;
+            }
+        }
     </style>
 </head>
 <body class="bg-neutral">

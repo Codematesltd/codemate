@@ -602,8 +602,6 @@ def update_project():
         project_id = data.get('project_id')
         progress = float(data.get('progress', 0))
         note = data.get('note')
-        snapshot = request.files.get('snapshot')
-        snapshot_description = data.get('snapshot_description')
         
         # Add status update when progress is 100%
         update_data = {
@@ -624,38 +622,8 @@ def update_project():
                     'created_at': 'NOW()'
                 }).execute()
             
-            # Handle snapshot upload
-            if snapshot and snapshot_description:
-                try:
-                    filename = secure_filename(snapshot.filename)
-                    # Store in project_snapshot folder inside refrence bucket
-                    storage_path = f"project_snapshot/{project_id}/{int(time.time())}_{filename}"
-                    file_data = snapshot.read()
-                    
-                    # Upload to refrence bucket
-                    storage_response = supabase.storage.from_('refrence').upload(
-                        storage_path,
-                        file_data
-                    )
-                    
-                    if storage_response:
-                        # Get public URL using correct path
-                        image_url = supabase.storage.from_('refrence').get_public_url(storage_path)
-                        snapshot_result = supabase.table('project_snapshots').insert({
-                            'project_id': project_id,
-                            'image_url': image_url,
-                            'storage_path': storage_path,
-                            'description': snapshot_description,
-                            'created_at': 'NOW()'
-                        }).execute()
-                        print(f"Snapshot saved at: {storage_path}")
-                except Exception as e:
-                    print(f"Error uploading snapshot: {str(e)}")
-                    return {'error': 'Failed to upload snapshot'}, 500
-            
             # Send completion email if progress is 100%
             if progress == 100:
-                # Get project details for email
                 project = supabase.table('bookings').select('email').eq('project_id', project_id).execute()
                 if project.data and project.data[0].get('email'):
                     send_project_completed_email(project.data[0]['email'], project_id)
@@ -716,23 +684,6 @@ def decline_project(project_id):
         
     except Exception as e:
         print(f"Decline error: {str(e)}")
-        return {'error': str(e)}, 500
-
-@app.route('/admin/project_snapshots/<project_id>')
-def get_project_snapshots(project_id):
-    if not session.get('admin_logged_in'):
-        return {'error': 'Unauthorized'}, 401
-    
-    try:
-        snapshots = supabase.table('project_snapshots')\
-            .select('*')\
-            .eq('project_id', project_id)\
-            .order('created_at', desc=True)\
-            .execute()
-        
-        return {'snapshots': snapshots.data}
-    except Exception as e:
-        print(f"Error fetching snapshots: {str(e)}")
         return {'error': str(e)}, 500
 
 @app.route('/consultation', methods=['GET', 'POST'])

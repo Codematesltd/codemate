@@ -50,6 +50,31 @@
                 border-radius: 0.5rem !important;
             }
         }
+        /* Add responsive design */
+        .form-container {
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        @media (max-width: 768px) {
+            .space-y-8 > * {
+                margin-top: 1.5rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .py-12 {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+            }
+            input {
+                font-size: 16px !important; /* Prevent zoom on mobile */
+            }
+        }
+        @media (min-height: 100vh) {
+            .min-h-screen {
+                min-height: calc(100vh - 4rem);
+            }
+        }
     </style>
 </head>
 <body class="bg-neutral">

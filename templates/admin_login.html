@@ -50,6 +50,40 @@
                 border-radius: 0.5rem !important;
             }
         }
+        /* Enhance responsive design */
+        @media (max-width: 768px) {
+            .max-w-md {
+                width: 90% !important;
+                margin: 0 auto;
+            }
+            .space-y-8 > * {
+                margin-top: 1.5rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .space-y-4 > * {
+                margin-top: 1rem !important;
+                margin-bottom: 1rem !important;
+            }
+            input {
+                font-size: 16px !important; /* Prevent zoom on mobile */
+            }
+        }
+        @media (max-width: 480px) {
+            .py-12 {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+            }
+            .px-4 {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+        }
+        /* Fix height on mobile */
+        @media (min-height: 100vh) {
+            .min-h-screen {
+                min-height: calc(100vh - 4rem);
+            }
+        }
     </style>
 </head>
 <body class="bg-neutral">

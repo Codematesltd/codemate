@@ -67,6 +67,37 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Add responsive styles */
+        @media (max-width: 768px) {
+            .max-w-xl {
+                width: 90% !important;
+                margin: 0 auto;
+            }
+            .p-8, .p-6 {
+                padding: 1rem !important;
+            }
+            .text-3xl {
+                font-size: 1.5rem !important;
+            }
+            .space-y-6 > * {
+                margin-top: 1rem !important;
+                margin-bottom: 1rem !important;
+            }
+            input, select, textarea {
+                font-size: 16px !important; /* Prevent zoom on mobile */
+            }
+        }
+        @media (max-width: 480px) {
+            .glass {
+                border-radius: 1rem;
+            }
+            .text-3xl {
+                font-size: 1.25rem !important;
+            }
+            .form-section {
+                padding: 0.75rem !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-neutral">
