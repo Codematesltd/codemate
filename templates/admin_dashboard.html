@@ -102,6 +102,10 @@
                     Approved
                     <span class="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-800 rounded-full approved-count"></span>
                 </button>
+                <button onclick="filterProjects('completed')" class="tab-btn px-4 py-2 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary">
+                    Completed
+                    <span class="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-800 rounded-full completed-count"></span>
+                </button>
                 <button onclick="filterProjects('declined')" class="tab-btn px-4 py-2 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary">
                     Declined
                     <span class="ml-2 px-2 py-0.5 text-xs bg-red-100 text-red-800 rounded-full declined-count"></span>
@@ -123,10 +127,20 @@
                                 <p class="text-sm text-gray-500">{{ booking.email }}</p>
                             </div>
                             <span class="px-3 py-1 rounded-full text-sm 
-                                {% if booking.status == 'pending_approval' %}bg-yellow-100 text-yellow-800
-                                {% elif booking.status == 'approved' %}bg-green-100 text-green-800
-                                {% elif booking.status == 'declined' %}bg-red-100 text-red-800{% endif %}">
-                                {{ booking.status }}
+                                {% if booking.progress == 100 or booking.status == 'completed' %}
+                                    bg-green-100 text-green-800
+                                {% elif booking.status == 'approved' %}
+                                    bg-blue-100 text-blue-800
+                                {% elif booking.status == 'pending_approval' %}
+                                    bg-yellow-100 text-yellow-800
+                                {% elif booking.status == 'declined' %}
+                                    bg-red-100 text-red-800
+                                {% endif %}">
+                                {% if booking.progress == 100 or booking.status == 'completed' %}
+                                    Completed
+                                {% else %}
+                                    {{ booking.status }}
+                                {% endif %}
                             </span>
                         </div>
 
@@ -157,6 +171,64 @@
                 </div>
                 {% endfor %}
             </div>
+        </div>
+    </div> <!-- end of main project grid container -->
+
+    <!-- Consultation Requests Section -->
+    <div class="glass max-w-7xl mx-auto mt-12 mb-8 p-8">
+        <h2 class="text-2xl font-bold text-primary mb-6">Consultation Requests</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-lg shadow">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 text-left text-primary">Name</th>
+                        <th class="px-4 py-2 text-left text-primary">Email</th>
+                        <th class="px-4 py-2 text-left text-primary">Phone</th>
+                        <th class="px-4 py-2 text-left text-primary">Service</th>
+                        <th class="px-4 py-2 text-left text-primary">Query</th>
+                        <th class="px-4 py-2 text-left text-primary">Requested At</th>
+                        <th class="px-4 py-2 text-left text-primary">Status</th>
+                        <th class="px-4 py-2 text-left text-primary">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in consultations %}
+                    <tr class="border-t {% if c.completed %}bg-green-50{% endif %}">
+                        <td class="px-4 py-2">{{ c.name }}</td>
+                        <td class="px-4 py-2">{{ c.email }}</td>
+                        <td class="px-4 py-2">{{ c.phone }}</td>
+                        <td class="px-4 py-2">{{ c.service }}</td>
+                        <td class="px-4 py-2">{{ c.query }}</td>
+                        <td class="px-4 py-2 text-xs text-gray-500">{{ c.created_at.split('.')[0].replace('T', ' ') if c.created_at else '' }}</td>
+                        <td class="px-4 py-2">
+                            {% if c.completed %}
+                                <span class="text-green-600 font-semibold">Completed</span>
+                            {% else %}
+                                <span class="text-yellow-600 font-semibold">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">
+                            {% if not c.completed %}
+                            <form method="POST" action="{{ url_for('mark_consultation_completed', consultation_id=c.id) }}">
+                                <button type="submit" class="bg-gradient-to-r from-primary to-secondary text-white px-3 py-1 rounded hover:opacity-90 transition text-sm">
+                                    Mark Completed
+                                </button>
+                            </form>
+                            {% else %}
+                            <form method="POST" action="{{ url_for('mark_consultation_pending', consultation_id=c.id) }}">
+                                <button type="submit" class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded hover:opacity-90 transition text-sm border border-yellow-300">
+                                    Mark Pending
+                                </button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if not consultations %}
+            <div class="text-center text-gray-500 py-8">No consultation requests yet.</div>
+            {% endif %}
         </div>
     </div>
 
@@ -432,11 +504,16 @@
             const counts = {
                 pending: 0,
                 approved: 0,
-                declined: 0
+                declined: 0,
+                completed: 0
             };
 
             cards.forEach(card => {
-                const status = card.dataset.status;
+                let status = card.dataset.status;
+                // Check if project is completed
+                if (status === 'approved' && card.querySelector('.text-sm').textContent.trim() === 'Completed') {
+                    status = 'completed';
+                }
                 if (counts[status] !== undefined) {
                     counts[status]++;
                 }
@@ -445,6 +522,7 @@
             document.querySelector('.pending-count').textContent = counts.pending;
             document.querySelector('.approved-count').textContent = counts.approved;
             document.querySelector('.declined-count').textContent = counts.declined;
+            document.querySelector('.completed-count').textContent = counts.completed;
         }
 
         document.addEventListener('DOMContentLoaded', updateProjectCounts);

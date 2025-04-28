@@ -240,6 +240,100 @@ def send_project_completed_email(email, project_id):
         print(f"Failed to send project completion email: {str(e)}")
         return False
 
+# Add this after your imports
+ADMIN_EMAILS = [
+    'nadager990@gmail.com',
+    'shrinivasnadager03@gmail.com',
+    'basavarajagurikar2004@gmail.com'
+    # Add more admin emails as needed
+]
+
+def notify_admins_new_consultation(consultation_data):
+    sender_email = os.getenv('EMAIL_ADDRESS')
+    sender_password = os.getenv('EMAIL_PASSWORD')
+    
+    try:
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(sender_email, sender_password)
+        
+        # Send individual emails to each admin
+        for admin_email in ADMIN_EMAILS:
+            msg = MIMEMultipart()  # Create new message for each recipient
+            msg['From'] = sender_email
+            msg['To'] = admin_email
+            msg['Subject'] = 'New Consultation Request - CodeMates'
+            
+            body = f"""
+            New consultation request received!
+
+            Name: {consultation_data['name']}
+            Email: {consultation_data['email']}
+            Phone: {consultation_data['phone']}
+            Service: {consultation_data['service']}
+            
+            Query:
+            {consultation_data['query']}
+            
+            Please check admin dashboard for more details.
+            """
+            
+            msg.attach(MIMEText(body, 'plain'))
+            server.send_message(msg)
+            print(f"Notification sent to admin: {admin_email}")
+        
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"Failed to send admin notifications: {str(e)}")
+        return False
+
+def notify_admins_new_project(project_data):
+    sender_email = os.getenv('EMAIL_ADDRESS')
+    sender_password = os.getenv('EMAIL_PASSWORD')
+    
+    try:
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(sender_email, sender_password)
+        
+        # Send individual emails to each admin
+        for admin_email in ADMIN_EMAILS:
+            msg = MIMEMultipart()  # Create new message for each recipient
+            msg['From'] = sender_email
+            msg['To'] = admin_email
+            msg['Subject'] = f'New Project Request - {project_data["project_id"]}'
+            
+            body = f"""
+            New project request received!
+
+            Project ID: {project_data['project_id']}
+            Name: {project_data['name']}
+            Email: {project_data['email']}
+            Phone: {project_data['mobile']}
+            Service: {project_data['service_selected']}
+            
+            Additional Services: {', '.join(project_data['additional_services']) if project_data['additional_services'] else 'None'}
+            
+            Requirements:
+            {project_data['requirements']}
+            
+            Reference URLs:
+            {project_data['reference_urls'] or 'None'}
+            
+            Reference Images: {len(project_data['reference_images'])} uploaded
+            
+            Please check admin dashboard for more details and to approve/decline the project.
+            """
+            
+            msg.attach(MIMEText(body, 'plain'))
+            server.send_message(msg)
+            print(f"Project notification sent to admin: {admin_email}")
+        
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"Failed to send admin project notifications: {str(e)}")
+        return False
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -331,7 +425,10 @@ def order():
             try:
                 booking_result = supabase.table('bookings').insert(booking_data).execute()
                 print("Booking created:", booking_result.data)
-                # Do NOT send credentials email here
+                
+                # Notify admins about new project
+                notify_admins_new_project(booking_data)
+                
                 return render_template('thank_you.html', project_id=project_id)
             except Exception as db_error:
                 print(f"Database error: {str(db_error)}")
@@ -349,7 +446,13 @@ def admin():
         return redirect(url_for('admin_login'))
     
     bookings = supabase.table('bookings').select('*').execute()
-    return render_template('admin_dashboard.html', bookings=bookings.data)
+    # Update booking status to completed if progress is 100%
+    for booking in bookings.data:
+        if booking.get('progress') == 100:
+            booking['status'] = 'completed'
+    
+    consultations = supabase.table('consultations').select('*').order('id', desc=True).execute()
+    return render_template('admin_dashboard.html', bookings=bookings.data, consultations=consultations.data)
 
 @app.cli.command("create-admin")
 @click.argument("email")
@@ -502,10 +605,14 @@ def update_project():
         snapshot = request.files.get('snapshot')
         snapshot_description = data.get('snapshot_description')
         
-        # Update project progress
-        result = supabase.table('bookings').update({
-            'progress': progress
-        }).eq('project_id', project_id).execute()
+        # Add status update when progress is 100%
+        update_data = {
+            'progress': progress,
+            'status': 'completed' if progress == 100 else 'approved'
+        }
+        
+        # Update project progress and status
+        result = supabase.table('bookings').update(update_data).eq('project_id', project_id).execute()
         
         if result.data:
             # Add note if provided
@@ -627,6 +734,50 @@ def get_project_snapshots(project_id):
     except Exception as e:
         print(f"Error fetching snapshots: {str(e)}")
         return {'error': str(e)}, 500
+
+@app.route('/consultation', methods=['GET', 'POST'])
+def consultation():
+    if request.method == 'POST':
+        try:
+            consultation_data = {
+                'name': request.form['name'],
+                'email': request.form['email'],
+                'phone': request.form['phone'],
+                'service': request.form['service'],
+                'query': request.form['query']
+            }
+            
+            # Insert into database
+            supabase.table('consultations').insert(consultation_data).execute()
+            
+            # Notify admins
+            notify_admins_new_consultation(consultation_data)
+            
+            return render_template('consultation_thankyou.html')
+        except Exception as e:
+            return render_template('consultation.html', error=str(e))
+    return render_template('consultation.html')
+
+@app.route('/admin/consultations')
+def admin_consultations():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+    consultations = supabase.table('consultations').select('*').order('id', desc=True).execute()
+    return render_template('admin_consultations.html', consultations=consultations.data)
+
+@app.route('/admin/consultation/<int:consultation_id>/complete', methods=['POST'])
+def mark_consultation_completed(consultation_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+    supabase.table('consultations').update({'completed': True}).eq('id', consultation_id).execute()
+    return redirect(url_for('admin'))
+
+@app.route('/admin/consultation/<int:consultation_id>/pending', methods=['POST'])
+def mark_consultation_pending(consultation_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+    supabase.table('consultations').update({'completed': False}).eq('id', consultation_id).execute()
+    return redirect(url_for('admin'))
 
 if __name__ == '__main__':
     app.run(debug=True)
