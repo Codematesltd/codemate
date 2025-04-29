@@ -96,29 +96,20 @@ except Exception as e:
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your-secret-key-here')
 
-def generate_password(length=12):
-    # More secure password generation
-    lowercase = string.ascii_lowercase
-    uppercase = string.ascii_uppercase
-    digits = string.digits
-    special = "!@#$%^&*"
-    all_chars = lowercase + uppercase + digits + special
+def generate_password(length=9):
+    # Get 4 random letters (mix of upper and lower case)
+    letters = ''.join(random.choice(string.ascii_letters) for _ in range(4))
     
-    # Ensure at least one of each type
-    password = [
-        random.choice(lowercase),
-        random.choice(uppercase),
-        random.choice(digits),
-        random.choice(special)
-    ]
+    # Get 1 special character
+    special = random.choice("!@#$%^&*")
     
-    # Fill remaining length with random chars
-    for _ in range(length - 4):
-        password.append(random.choice(all_chars))
+    # Get 4 random numbers
+    numbers = ''.join(random.choice(string.digits) for _ in range(4))
     
-    # Shuffle the password
-    random.shuffle(password)
-    return ''.join(password)
+    # Combine all parts
+    password = letters + special + numbers
+    
+    return password
 
 def send_credentials_email(email, project_id, password):
     sender_email = os.getenv('EMAIL_ADDRESS')
@@ -244,7 +235,8 @@ def send_project_completed_email(email, project_id):
 ADMIN_EMAILS = [
     'nadager990@gmail.com',
     'shrinivasnadager03@gmail.com',
-    'basavarajagurikar2004@gmail.com'
+    'basavarajagurikar2004@gmail.com',
+    'narasareddy8296@gmail.com'
     # Add more admin emails as needed
 ]
 
