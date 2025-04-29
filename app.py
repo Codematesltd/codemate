@@ -611,25 +611,33 @@ def update_project():
         
         # Update project progress and status
         result = supabase.table('bookings').update(update_data).eq('project_id', project_id).execute()
-        
-        if result.data:
+        print("Update result:", result)  # Debug print
+
+        # Check for errors in the response
+        if hasattr(result, 'error') and result.error:
+            print("Supabase update error:", result.error)
+            return {'error': str(result.error)}, 500
+
+        # result.data is a list of updated rows
+        if result.data and len(result.data) > 0:
             # Add note if provided
             if note:
-                note_result = supabase.table('progress_notes').insert({
+                supabase.table('progress_notes').insert({
                     'project_id': project_id,
                     'note': note,
                     'progress_value': progress,
                     'created_at': 'NOW()'
                 }).execute()
-            
+
             # Send completion email if progress is 100%
             if progress == 100:
                 project = supabase.table('bookings').select('email').eq('project_id', project_id).execute()
-                if project.data and project.data[0].get('email'):
+                if project.data and len(project.data) > 0 and project.data[0].get('email'):
                     send_project_completed_email(project.data[0]['email'], project_id)
 
             return {'success': True, 'message': 'Project updated successfully'}
-        
+
+        print("No rows updated for project_id:", project_id)
         return {'error': 'Project not found'}, 404
         
     except Exception as e:
