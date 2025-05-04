@@ -489,92 +489,277 @@
         <section class="bg-secondary/10 py-8 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-primary">Meet Our Developers</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
-                    <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                            <img src="/static/images/shri.jpg" alt="Shrinivas Nadager" 
-                                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                        </div>
-                        <!-- Shrinivas Nadager section  -->
-                        <h3 class="font-bold text-xl text-gray-800">Shrinivas Nadager</h3>
-                        <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
-                        <div class="flex justify-center gap-4 mt-2">
-                            <a href="https://www.linkedin.com/in/shrinivas-nadager" target="_blank" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                            <a href="mailto:shrinivasnadager03@gmail.com" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            </a>
+                <div class="relative">
+                    <div class="overflow-hidden">
+                        <div class="flex transition-transform duration-500 ease-in-out" id="teamCarousel">
+                            <!-- First 3 members -->
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Shrinivas section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/shri.jpg" alt="Shrinivas Nadager" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Shrinivas Nadager</h3>
+                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/shrinivas-nadager" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:shrinivasnadager03@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Narasareddy section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/reddy.jpg" alt="Manikanta" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Narasareddy</h3>
+                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/narasareddy-annepu-17a233319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:narasareddy8296@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Basavaraja section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/basu.jpg" alt="Basavaraj Gurikar" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Basavaraja H. Gurikar</h3>
+                                    <p class="text-gray-600">Security Engineer | Data analyst</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/basavaraj-h-gurikar-95b739284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:basavarajgurikar2004@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Next 3 members -->
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Danish section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/danish.jpg" alt="Syed Danish" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Syed Danish</h3>
+                                    <p class="text-gray-600">Backend Developer | Data Analyst</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/syed-danish-354259251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:syeddanish1092@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Yusuf section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/yusuf.jpg" alt="yusuf" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Syed khaja Yousufuddin</h3>
+                                    <p class="text-gray-600">Full Stack Developer | IT Support & Services</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/syed-yousufuddin-a64265276?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:skyousuf22@outlook.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Ramachandra section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/ram.jpg" alt="Ramachandra" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Ramachandra</h3>
+                                    <p class="text-gray-600">UI/UX Design | Software Engineer</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/ramchandra-a-730876284" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:rajalasangi@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Next 2 members + First member repeated -->
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Danish section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/danish.jpg" alt="Syed Danish" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Syed Danish</h3>
+                                    <p class="text-gray-600">Backend Developer | Data Analyst</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/syed-danish-354259251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:syeddanish1092@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Yusuf section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/yusuf.jpg" alt="yusuf" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Syed khaja Yousufuddin</h3>
+                                    <p class="text-gray-600">Full Stack Developer | IT Support & Services</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/syed-yousufuddin-a64265276?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:skyousuf22@outlook.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Shrinivas section (duplicated) -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/shri.jpg" alt="Shrinivas Nadager" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Shrinivas Nadager</h3>
+                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/shrinivas-nadager" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:shrinivasnadager03@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Next 2 members + First member of this group repeated -->
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Narasareddy section (duplicated) -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/reddy.jpg" alt="Manikanta" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Narasareddy</h3>
+                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/narasareddy-annepu-17a233319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:narasareddy8296@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Basavaraja section (duplicated) -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/basu.jpg" alt="Basavaraj Gurikar" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Basavaraja H. Gurikar</h3>
+                                    <p class="text-gray-600">Security Engineer | Data analyst</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/basavaraj-h-gurikar-95b739284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:basavarajgurikar2004@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Danish section (duplicated) -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/danish.jpg" alt="Syed Danish" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Syed Danish</h3>
+                                    <p class="text-gray-600">Backend Developer | Data Analyst</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/syed-danish-354259251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:syeddanish1092@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="min-w-full sm:min-w-[33.333%] px-4">
+                                <!-- Ramachandra section -->
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
+                                        <img src="/static/images/ram.jpg" alt="Ramachandra" 
+                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                                    </div>
+                                    <h3 class="font-bold text-xl text-gray-800">Ramachandra</h3>
+                                    <p class="text-gray-600">UI/UX Design | Software Engineer</p>
+                                    <div class="flex justify-center gap-4 mt-2">
+                                        <a href="https://www.linkedin.com/in/ramchandra-a-730876284" target="_blank" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                        </a>
+                                        <a href="mailto:rajalasangi@gmail.com" class="text-primary hover:text-secondary">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                     <!-- Narasareddy section  -->
-                    <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                            <img src="/static/images/reddy.jpg" alt="Manikanta" 
-                                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                        </div>
-                        <h3 class="font-bold text-xl text-gray-800">Narasareddy</h3>
-                        <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
-                        <div class="flex justify-center gap-4 mt-2">
-                            <a href="https://www.linkedin.com/in/narasareddy-annepu-17a233319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                            <a href="mailto:narasareddy8296@gmail.com" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            </a>
-                        </div>
-                    </div>
-<!-- Basavaraja Gurikar section  -->
-                    <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                            <img src="/static/images/basu.jpg" alt="Basavaraj Gurikar" 
-                                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                        </div>
-                        <h3 class="font-bold text-xl text-gray-800">Basavaraja H. Gurikar</h3>
-                        <p class="text-gray-600">Security Engineer | Data analyst</p>
-                        <div class="flex justify-center gap-4 mt-2">
-                            <a href="https://www.linkedin.com/in/basavaraj-h-gurikar-95b739284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                            <a href="mailto:basavarajgurikar2004@gmail.com" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                            <img src="/static/images/yusuf.jpg" alt="yusuf" 
-                                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                        </div>
-                        <h3 class="font-bold text-xl text-gray-800">Syed khaja Yousufuddin</h3>
-                        <p class="text-gray-600">Full Stack Developer | IT Support & Services</p>
-                        <div class="flex justify-center gap-4 mt-2">
-                            <a href="https://www.linkedin.com/in/syed-yousufuddin-a64265276?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                            <a href="mailto:skyousuf22@outlook.com" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Add new developer -->
-                    <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                            <img src="/static/images/danish.jpg" alt="Syed Danish" 
-                                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                        </div>
-                        <h3 class="font-bold text-xl text-gray-800">Syed Danish</h3>
-                        <p class="text-gray-600">Backend Developer | Data Analyst</p>
-                        <div class="flex justify-center gap-4 mt-2">
-                            <a href="https://www.linkedin.com/in/syed-danish-354259251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                            <a href="mailto:syeddanish1092@gmail.com" class="text-primary hover:text-secondary">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            </a>
-                        </div>
+                    <!-- Team Carousel Controls -->
+                    <button id="prevTeam" class="absolute left-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-secondary p-3 rounded-full text-white z-10 shadow-lg hover:opacity-90 transition-opacity">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <button id="nextTeam" class="absolute right-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-secondary to-primary p-3 rounded-full text-white z-10 shadow-lg hover:opacity-90 transition-opacity">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <!-- Team Indicators -->
+                    <div class="flex justify-center mt-8 space-x-2">
+                        <button type="button" class="w-8 h-2 rounded-full bg-gradient-to-r from-primary to-secondary team-indicator"></button>
+                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20 team-indicator"></button>
                     </div>
                 </div>
             </div>
@@ -582,7 +767,7 @@
 
         <!-- Contact -->
         <section class="bg-neutral py-8 sm:py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
                 <h2 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-primary text-center">Ready to Start Your Project?</h2>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:space-x-4">
                     <a href="{{ url_for('order') }}" 
@@ -618,7 +803,7 @@
                                 </svg>
                             </a>
                             <a href="https://x.com/codematesltd" class="text-white/90 hover:text-white transition-colors">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"></svg>
                                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                                 </svg>
                             </a>
@@ -644,7 +829,7 @@
                     <!-- Services -->
                     <div>
                         <h3 class="text-xl font-bold mb-4">Our Services</h3>
-                        <ul class="space-y-2">
+                        <ul class="space-y-2"></ul>
                             <li class="text-white/90">UI/UX Design</li>
                             <li class="text-white/90">Frontend Development</li>
                             <li class="text-white/90">Backend Development</li>
@@ -812,6 +997,114 @@
             startAutoAdvance();
         });
 
+        // Team carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const teamCarousel = document.getElementById('teamCarousel');
+            const totalTeamMembers = 6; // Updated to include Ramachandra
+            const visibleMembers = 3; // Number of members shown at once
+            let currentTeamSlide = 0;
+            let isTeamTransitioning = false;
+            let teamAutoAdvance; // Add this variable
+
+            function updateTeamCarousel(smooth = true) {
+                if (isTeamTransitioning) return;
+                
+                const slideWidth = window.innerWidth >= 640 ? 33.333 : 100;
+                
+                if (smooth) {
+                    isTeamTransitioning = true;
+                    teamCarousel.style.transition = 'transform 0.5s ease-in-out';
+                } else {
+                    teamCarousel.style.transition = 'none';
+                }
+
+                teamCarousel.style.transform = `translateX(-${currentTeamSlide * slideWidth}%)`;
+                updateTeamIndicators();
+            }
+
+            // Update slide position on window resize
+            window.addEventListener('resize', () => {
+                updateTeamCarousel(false);
+            });
+
+            function updateTeamIndicators() {
+                const teamIndicators = document.querySelectorAll('.team-indicator');
+                teamIndicators.forEach((indicator, idx) => {
+                    if (idx === currentTeamSlide % totalTeamMembers) {
+                        indicator.classList.add('w-8', 'bg-gradient-to-r', 'from-primary', 'to-secondary');
+                        indicator.classList.remove('w-2', 'bg-primary/20');
+                    } else {
+                        indicator.classList.remove('w-8', 'bg-gradient-to-r', 'from-primary', 'to-secondary');
+                        indicator.classList.add('w-2', 'bg-primary/20');
+                    }
+                });
+            }
+
+            // Handle transition end
+            teamCarousel.addEventListener('transitionend', function() {
+                isTeamTransitioning = false;
+                // Reset to start when reaching the end
+                if (currentTeamSlide >= totalTeamMembers - visibleMembers + 1) {
+                    currentTeamSlide = 0;
+                    updateTeamCarousel(false);
+                }
+            });
+
+            function startTeamAutoAdvance() {
+                if (teamAutoAdvance) clearInterval(teamAutoAdvance);
+                teamAutoAdvance = setInterval(() => {
+                    if (currentTeamSlide < totalTeamMembers - visibleMembers + 1) {
+                        currentTeamSlide++;
+                        updateTeamCarousel();
+                    } else {
+                        currentTeamSlide = 0;
+                        updateTeamCarousel(false);
+                    }
+                }, 3000); // Change slides every 3 seconds
+            }
+
+            function stopTeamAutoAdvance() {
+                if (teamAutoAdvance) {
+                    clearInterval(teamAutoAdvance);
+                    teamAutoAdvance = null;
+                }
+            }
+
+            const prevTeamBtn = document.getElementById('prevTeam');
+            const nextTeamBtn = document.getElementById('nextTeam');
+            prevTeamBtn.addEventListener('click', () => {
+                stopTeamAutoAdvance();
+                currentTeamSlide = (currentTeamSlide - 1 + totalTeamMembers) % totalTeamMembers;
+                updateTeamCarousel();
+                startTeamAutoAdvance();
+            });
+
+            nextTeamBtn.addEventListener('click', () => {
+                stopTeamAutoAdvance();
+                currentTeamSlide = (currentTeamSlide + 1) % totalTeamMembers;
+                updateTeamCarousel();
+                startTeamAutoAdvance();
+            });
+
+            const teamIndicators = document.querySelectorAll('.team-indicator');
+            teamIndicators.forEach((indicator, idx) => {
+                indicator.addEventListener('click', () => {
+                    stopTeamAutoAdvance();
+                    currentTeamSlide = idx;
+                    updateTeamCarousel();
+                    startTeamAutoAdvance();
+                });
+            });
+
+            // Pause on hover
+            teamCarousel.parentElement.addEventListener('mouseenter', stopTeamAutoAdvance);
+            teamCarousel.parentElement.addEventListener('mouseleave', startTeamAutoAdvance);
+
+            // Initialize
+            updateTeamCarousel();
+            startTeamAutoAdvance();
+        });
+
         // Hamburger menu functionality
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -840,6 +1133,25 @@
                     svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />`;
                 }
             });
+        });
+
+        // Disable right click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert('Right clicking is disabled on this website.');
+        });
+
+        // Disable keyboard shortcuts that could bypass right-click prevention
+        document.addEventListener('keydown', function(e) {
+            // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (Dev tools)
+            // Prevent Ctrl+U (View source)
+            // Prevent Ctrl+S (Save)
+            if (
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
+                (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))
+            ) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
