@@ -1,120 +1,475 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Consultation - CodeMates</title>
-    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='images/fav.png') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#673AB7',
-                        secondary: '#009688',
-                        accent: '#FFD700',
-                        neutral: '#FFFFFF'
-                    }
-                }
-            }
+{% extends "base.html" %}
+
+{% block title %}Free Consultation - CodeMates{% endblock %}
+
+{% block extra_head %}
+<style>
+    .glass {
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+        backdrop-filter: blur(8px);
+        border-radius: 1.5rem;
+        border: 1px solid rgba(255,255,255,0.18);
+    }
+    .form-section {
+        background: linear-gradient(135deg, #fff 60%, #f3e8ff 100%);
+        box-shadow: 0 4px 24px 0 rgba(103,58,183,0.10);
+        border-radius: 1.5rem;
+        border: 1px solid #ede7f6;
+    }
+    .form-section input:focus, .form-section textarea:focus, .form-section select:focus {
+        border-color: #673AB7 !important;
+        box-shadow: 0 0 0 2px #673AB722;
+    }
+    .form-section input, .form-section textarea, .form-section select {
+        transition: border 0.2s, box-shadow 0.2s;
+    }
+    .form-section label {
+        font-weight: 600;
+        letter-spacing: 0.01em;
+    }
+    .form-section button[type="submit"] {
+        background: linear-gradient(90deg, #673AB7 0%, #009688 100%);
+        box-shadow: 0 2px 8px 0 #673ab71a;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .form-section button[type="submit"]:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 6px 24px 0 #673ab733;
+    }
+    .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 4px solid #fff;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    /* Add responsive styles */
+    @media (max-width: 768px) {
+        .max-w-xl {
+            width: 90% !important;
+            margin: 0 auto;
         }
-    </script>
-    <style>
+        .p-8, .p-6 {
+            padding: 1rem !important;
+        }
+        .text-3xl {
+            font-size: 1.5rem !important;
+        }
+        .space-y-6 > * {
+            margin-top: 1rem !important;
+            margin-bottom: 1rem !important;
+        }
+        input, select, textarea {
+            font-size: 16px !important; /* Prevent zoom on mobile */
+        }
+    }
+    @media (max-width: 480px) {
         .glass {
-            background: rgba(255,255,255,0.8);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-            backdrop-filter: blur(8px);
-            border-radius: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 1rem;
+        }
+        .text-3xl {
+            font-size: 1.25rem !important;
         }
         .form-section {
-            background: linear-gradient(135deg, #fff 60%, #f3e8ff 100%);
-            box-shadow: 0 4px 24px 0 rgba(103,58,183,0.10);
-            border-radius: 1.5rem;
-            border: 1px solid #ede7f6;
+            padding: 0.75rem !important;
         }
-        .form-section input:focus, .form-section textarea:focus, .form-section select:focus {
-            border-color: #673AB7 !important;
-            box-shadow: 0 0 0 2px #673AB722;
+    }
+
+    /* Enhanced Mobile Consultation Form */
+    @media (max-width: 768px) {
+        .consultation-container {
+            padding: 1rem;
+            width: 100%;
+            min-height: calc(100vh - 4rem);
         }
-        .form-section input, .form-section textarea, .form-section select {
-            transition: border 0.2s, box-shadow 0.2s;
+        
+        .consultation-card {
+            width: 95%;
+            max-width: none;
+            margin: 1rem auto;
+            border-radius: 1rem;
+            padding: 1.5rem;
         }
-        .form-section label {
-            font-weight: 600;
-            letter-spacing: 0.01em;
+        
+        .input-group {
+            margin-bottom: 1.25rem;
         }
-        .form-section button[type="submit"] {
-            background: linear-gradient(90deg, #673AB7 0%, #009688 100%);
-            box-shadow: 0 2px 8px 0 #673ab71a;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            transition: transform 0.1s, box-shadow 0.2s;
+        
+        .form-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
         }
-        .form-section button[type="submit"]:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 6px 24px 0 #673ab733;
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            font-size: 16px !important;
+            padding: 0.75rem;
+            min-height: 44px;
+            width: 100%;
         }
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid #fff;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
+        
+        textarea {
+            min-height: 120px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .phone-group {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.5rem;
         }
-        /* Add responsive styles */
-        @media (max-width: 768px) {
-            .max-w-xl {
-                width: 90% !important;
-                margin: 0 auto;
-            }
-            .p-8, .p-6 {
-                padding: 1rem !important;
-            }
-            .text-3xl {
-                font-size: 1.5rem !important;
-            }
-            .space-y-6 > * {
-                margin-top: 1rem !important;
-                margin-bottom: 1rem !important;
-            }
-            input, select, textarea {
-                font-size: 16px !important; /* Prevent zoom on mobile */
-            }
+        
+        #country_code {
+            width: 100%;
         }
-        @media (max-width: 480px) {
-            .glass {
-                border-radius: 1rem;
-            }
-            .text-3xl {
-                font-size: 1.25rem !important;
-            }
-            .form-section {
-                padding: 0.75rem !important;
-            }
+        
+        button[type="submit"] {
+            width: 100%;
+            min-height: 44px;
+            font-size: 1rem;
+            margin-top: 1rem;
         }
-    </style>
-</head>
-<body class="bg-neutral">
-    <nav class="bg-primary shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex-shrink-0 flex items-center">
-                    <img src="/static/images/fav.png" alt="CodeMates Logo" class="h-10 w-10 mr-3 rounded-full bg-white object-contain" />
-                    <a href="{{ url_for('index') }}" class="text-2xl font-bold text-white">CodeMates</a>
-                </div>
-            </div>
+        
+        .benefits-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+            padding: 1rem;
+        }
+        
+        .benefit-card {
+            padding: 1rem;
+        }
+        
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+        }
+    }
+
+    /* Small screen optimizations */
+    @media (max-width: 480px) {
+        .glass {
+            backdrop-filter: none;
+            background: rgba(255,255,255,0.95);
+            margin: 0;
+            border-radius: 0;
+        }
+        
+        .form-section {
+            padding: 1rem;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .description {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .benefit-card {
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+        
+        .benefit-content {
+            margin-top: 0.5rem;
+        }
+    }
+
+    /* Landscape mode optimization */
+    @media screen and (orientation: landscape) and (max-height: 600px) {
+        .consultation-container {
+            padding: 1rem;
+        }
+        
+        .consultation-card {
+            margin: 0 auto;
+        }
+        
+        .form-section {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .benefits-section {
+            display: none;
+        }
+    }
+
+    /* Enhanced tablet view */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .consultation-card {
+            width: 90%;
+            max-width: 800px;
+        }
+        
+        .form-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+        
+        .benefits-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+    
+    /* Better form validation feedback */
+    @media (max-width: 768px) {
+        .error-message {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            margin-top: 0.25rem;
+        }
+        
+        input:invalid,
+        textarea:invalid,
+        select:invalid {
+            border-color: #ef4444;
+        }
+        
+        .validation-icon {
+            right: 0.5rem;
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    /* Enhanced Mobile Consultation Form */
+    @media (max-width: 768px) {
+        .consultation-container {
+            padding: 1rem;
+            min-height: calc(100vh - 4rem);
+        }
+        
+        .consultation-card {
+            width: 95%;
+            max-width: none;
+            margin: 1rem auto;
+            padding: 1.5rem;
+        }
+        
+        .page-title {
+            font-size: 1.75rem;
+            line-height: 1.2;
+            text-align: center;
+        }
+        
+        .description {
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .form-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            font-size: 16px !important;
+            padding: 0.75rem;
+            min-height: 44px;
+            width: 100%;
+        }
+        
+        textarea {
+            min-height: 120px;
+        }
+        
+        .phone-group {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.5rem;
+        }
+        
+        #country_code {
+            width: 100%;
+        }
+        
+        .service-options {
+            grid-template-columns: 1fr !important;
+        }
+        
+        .service-card {
+            padding: 1rem;
+        }
+        
+        .submit-button {
+            width: 100%;
+            min-height: 44px;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .error-message {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+        }
+    }
+
+    /* Small screen optimizations */
+    @media (max-width: 480px) {
+        .glass {
+            margin: 0;
+            border-radius: 0;
+            backdrop-filter: none;
+            background: rgba(255,255,255,0.95);
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+        }
+        
+        .description {
+            font-size: 0.875rem;
+        }
+        
+        .form-section {
+            padding: 1rem;
+        }
+        
+        .service-card {
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+        
+        .service-content {
+            margin-top: 0.5rem;
+        }
+    }
+
+    /* Landscape mode optimization */
+    @media screen and (orientation: landscape) and (max-height: 600px) {
+        .consultation-container {
+            height: auto;
+            padding: 1rem 0;
+        }
+        
+        .consultation-card {
+            margin: 0 auto;
+        }
+        
+        .form-section {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .service-options {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+
+    /* Enhanced tablet view */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .consultation-card {
+            width: 90%;
+            max-width: 800px;
+        }
+        
+        .form-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+        
+        .service-options {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+
+    /* Better form validation feedback */
+    @media (max-width: 768px) {
+        .error-field {
+            border-color: #ef4444;
+        }
+        
+        .validation-message {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            color: #ef4444;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .validation-icon {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+        }
+        
+        .required-field::after {
+            content: "*";
+            color: #ef4444;
+            margin-left: 0.25rem;
+        }
+        
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+        
+        .custom-select select {
+            appearance: none;
+            padding-right: 2rem;
+        }
+        
+        .custom-select::after {
+            content: "";
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid currentColor;
+            pointer-events: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="pt-32 pb-16 bg-gradient-to-br from-[#f7f9fc] to-[#e5f0ff]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold heading-gradient mb-6 font-display">Free Consultation</h1>
+            <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                Schedule a consultation with our experts to discuss your project requirements
+            </p>
         </div>
-    </nav>
-    <div class="max-w-xl mx-auto py-12 px-2 sm:px-2 lg:px-8">
-        <div class="glass shadow-2xl rounded-2xl overflow-hidden p-8">
-            <h2 class="text-3xl font-extrabold text-primary mb-6">Get a Free Consultation</h2>
+
+        <!-- Consultation Form -->
+        <div class="bg-white p-8 rounded-xl shadow-lg mb-16">
             <form method="POST" class="form-section p-6 space-y-6">
                 {% if error %}
                 <div class="text-red-500 text-center">{{ error }}</div>
@@ -155,110 +510,18 @@
             </form>
         </div>
     </div>
-    <script>
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const btn = this.querySelector('button[type="submit"]');
-            if (btn) {
-                btn.disabled = true;
-                btn.dataset.original = btn.innerHTML;
-                btn.innerHTML = '<span class="spinner"></span>';
-            }
-        });
-    </script>
-    <!-- Footer -->
-    <footer class="bg-[#512DA8] text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Main Footer Content -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <!-- Company Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">CodeMates</h3>
-                    <div class="flex items-center mb-4">
-                        <img src="{{ url_for('static', filename='images/fav.png') }}" alt="CodeMates Logo" class="h-10 w-auto mr-2">
-                    </div>
-                    <p class="text-white/90 text-sm leading-relaxed mb-4 text-justify">
-                        Empowering businesses with future-ready digital solutions, delivered by a curated network of top-tier freelancers—making advanced technology accessible, reliable, and impactful.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-white/90 hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-white/90 hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-white/90 hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ url_for('index') }}" class="text-white/90 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="{{ url_for('consultation') }}" class="text-white/90 hover:text-white transition-colors">Free Consultation</a></li>
-                        <li><a href="{{ url_for('order') }}" class="text-white/90 hover:text-white transition-colors">Start a Project</a></li>
-                        <li><a href="{{ url_for('client_login') }}" class="text-white/90 hover:text-white transition-colors">Client Portal</a></li>
-                    </ul>
-                </div>
+</div>
+{% endblock %}
 
-                <!-- Services -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Our Services</h3>
-                    <ul class="space-y-2">
-                        <li class="text-white/90">UI/UX Design</li>
-                        <li class="text-white/90">Frontend Development</li>
-                        <li class="text-white/90">Backend Development</li>
-                        <li class="text-white/90">Full Stack Development</li>
-                        <li class="text-white/90">Data Analysis</li>
-                        <li class="text-white/90">Data Science</li>
-                        <li class="text-white/90">ML Model Development</li>
-                        <li class="text-white/90">Code Debugging</li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                            <a href="mailto:codematesltd@gmail.com" class="text-white/90 hover:text-white transition-colors">codematesltd@gmail.com</a>
-                        </li>
-                        <li class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="text-white/90">Kalaburgi, Karnataka, India</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Bottom Footer -->
-            <div class="pt-8 border-t border-white/10">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="text-sm text-white/90">
-                        © 2025 CodeMates. All rights reserved.
-                    </div>
-                    <div class="flex space-x-4 text-sm text-white/90 md:justify-end">
-                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+{% block extra_scripts %}
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const btn = this.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.disabled = true;
+            btn.dataset.original = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span>';
+        }
+    });
+</script>
+{% endblock %}

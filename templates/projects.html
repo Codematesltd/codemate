@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Our Projects - CodeMates{% endblock %}
+
+{% block content %}
+<!-- Project Showcase Carousel -->
+<div class="relative h-[600px] md:h-[500px]">
+    <div class="overflow-hidden h-full">
+        <div class="flex transition-transform duration-500 ease-in-out" id="projectCarousel">
+            <!-- Slide 1: Yukti Fest College Website -->
+            <div class="min-w-full relative">
+                <img src="/static/images/vtu.png" alt="Yukti Fest College Website" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                        <h2 class="text-5xl font-bold mb-4">Yukti Fest College Website</h2>
+                        <p class="text-xl mb-8 max-w-2xl text-justify">A vibrant and responsive website designed to showcase Yukti Fest, featuring event details, registration, schedules, and live updates.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 2: AI News Web App -->
+            <div class="min-w-full relative">
+                <img src="/static/images/news.png" alt="AI News Web App" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                        <h2 class="text-5xl font-bold mb-4">AI News Web App</h2>
+                        <p class="text-xl mb-8 max-w-2xl text-justify">An intelligent news platform using AI to curate and summarize trending news articles.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3: KisanSetu -->
+            <div class="min-w-full relative">
+                <img src="/static/images/kisansetu.png" alt="KisanSetu" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                        <h2 class="text-5xl font-bold mb-4">KisanSetu</h2>
+                        <p class="text-xl mb-8 max-w-2xl text-justify">A farmer-focused platform connecting farmers to buyers and services, with market rates and weather updates.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 4: Student Performance Analyzer -->
+            <div class="min-w-full relative">
+                <img src="/static/images/student.jpg" alt="Student Performance Analyzer" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                        <h2 class="text-5xl font-bold mb-4">Student Performance Analyzer</h2>
+                        <p class="text-xl mb-8 max-w-2xl text-justify">Data-driven tool for academic performance evaluation with SGPA insights and predictive analysis.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 5: e-Virtual Study Assistant -->
+            <div class="min-w-full relative">
+                <img src="/static/images/assist.png" alt="e-Virtual Study Assistant" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                        <h2 class="text-5xl font-bold mb-4">e-Virtual Study Assistant</h2>
+                        <p class="text-xl mb-8 max-w-2xl text-justify">Web-based study management tool with voice commands and resource organization features.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel Controls -->
+    <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-primary/80 p-2 rounded-full shadow-lg hover:bg-primary text-white" onclick="moveCarousel(-1)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-primary/80 p-2 rounded-full shadow-lg hover:bg-primary text-white" onclick="moveCarousel(1)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </button>
+</div>
+
+<!-- Project Grid -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold text-primary mb-8">Our Projects</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for project in projects %}
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <img src="{{ project.image }}" alt="{{ project.title }}" class="w-full h-48 object-cover">
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{ project.title }}</h3>
+                <p class="text-gray-600 mb-4">{{ project.description }}</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-primary">{{ project.category }}</span>
+                    {% if project.id %}
+                    <a href="{{ url_for('project_details', project_id=project.id) }}" 
+                       class="text-secondary hover:text-primary transition-colors">
+                        View Details →
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('project_details', project_id=0) }}" 
+                       class="text-secondary hover:text-primary transition-colors">
+                        View All Projects →
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Copy carousel JavaScript from index.html
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.getElementById('projectCarousel');
+        let currentSlide = 0;
+        
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        window.moveCarousel = function(direction) {
+            currentSlide = (currentSlide + direction + 5) % 5;
+            updateCarousel();
+        };
+
+        // Auto advance
+        setInterval(() => moveCarousel(1), 5000);
+    });
+</script>
+{% endblock %}

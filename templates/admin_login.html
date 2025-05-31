@@ -85,6 +85,294 @@
                 min-height: calc(100vh - 4rem);
             }
         }
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 1rem;
+                width: 100%;
+            }
+            
+            .login-card {
+                width: 95%;
+                max-width: none;
+                margin: 1rem auto;
+                border-radius: 1rem;
+            }
+            
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+            
+            input[type="text"],
+            input[type="password"] {
+                font-size: 16px !important;
+                padding: 0.75rem;
+                min-height: 44px;
+            }
+            
+            button[type="submit"] {
+                width: 100%;
+                min-height: 44px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (max-width: 480px) {
+            .glass {
+                backdrop-filter: none;
+                background: rgba(255,255,255,0.95);
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 0.75rem;
+                text-align: center;
+            }
+            
+            .form-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Landscape mode optimization */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            .min-h-screen {
+                min-height: auto;
+                padding: 1rem 0;
+            }
+            
+            .login-container {
+                margin: 0 auto;
+            }
+        }
+
+        /* Enhanced Mobile Admin Login */
+        @media (max-width: 768px) {
+            .admin-login-container {
+                padding: 1rem;
+                min-height: calc(100vh - 4rem);
+            }
+            
+            .admin-login-card {
+                width: 95%;
+                max-width: none;
+                margin: 2rem auto;
+                padding: 1.5rem;
+            }
+            
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+            
+            input[type="text"],
+            input[type="password"] {
+                font-size: 16px !important;
+                padding: 0.75rem;
+                min-height: 44px;
+                width: 100%;
+            }
+            
+            button[type="submit"] {
+                width: 100%;
+                min-height: 44px;
+                font-size: 1rem;
+                margin-top: 1rem;
+            }
+            
+            .error-message {
+                font-size: 0.875rem;
+                padding: 0.75rem;
+                margin: 1rem 0;
+                border-radius: 0.5rem;
+            }
+        }
+
+        /* Small screen optimizations */
+        @media (max-width: 480px) {
+            .glass {
+                margin: 0;
+                border-radius: 0;
+                backdrop-filter: none;
+                background: rgba(255,255,255,0.95);
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            
+            .description {
+                font-size: 0.875rem;
+                line-height: 1.5;
+                text-align: center;
+            }
+            
+            .form-section {
+                padding: 1rem;
+            }
+        }
+
+        /* Landscape mode optimization */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            .admin-login-container {
+                padding: 1rem 0;
+            }
+            
+            .admin-login-card {
+                margin: 0 auto;
+                max-height: calc(100vh - 2rem);
+            }
+            
+            .form-section {
+                overflow-y: auto;
+            }
+        }
+
+        /* Enhanced Mobile Login Page */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 1rem;
+                min-height: calc(100vh - 4rem);
+            }
+            
+            .login-card {
+                width: 95%;
+                max-width: none;
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            
+            .login-logo {
+                width: 64px;
+                height: 64px;
+                margin: 0 auto 1.5rem;
+            }
+            
+            .login-title {
+                font-size: 1.75rem;
+                line-height: 1.2;
+                text-align: center;
+            }
+            
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+            
+            input[type="text"],
+            input[type="password"] {
+                font-size: 16px !important;
+                padding: 0.75rem;
+                min-height: 44px;
+                width: 100%;
+            }
+            
+            .submit-button {
+                width: 100%;
+                min-height: 44px;
+                font-size: 1rem;
+            }
+            
+            .error-message {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+        }
+
+        /* Small screen optimizations */
+        @media (max-width: 480px) {
+            .glass {
+                margin: 0;
+                border-radius: 0;
+                backdrop-filter: none;
+                background: rgba(255,255,255,0.95);
+            }
+            
+            .login-card {
+                border-radius: 0;
+            }
+            
+            .form-label {
+                font-size: 0.875rem;
+            }
+            
+            .back-link {
+                padding: 0.5rem;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        /* Landscape mode optimization */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            .login-container {
+                height: auto;
+                padding: 1rem 0;
+            }
+            
+            .login-card {
+                margin: 0 auto;
+            }
+            
+            .login-logo {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Enhanced tablet view */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .login-card {
+                width: 80%;
+                max-width: 400px;
+            }
+        }
+
+        /* Better form validation feedback */
+        @media (max-width: 768px) {
+            .error-field {
+                border-color: #ef4444;
+            }
+            
+            .error-message {
+                color: #ef4444;
+                font-size: 0.75rem;
+                margin-top: 0.25rem;
+            }
+            
+            .validation-icon {
+                position: absolute;
+                right: 0.75rem;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 16px;
+                height: 16px;
+            }
+            
+            .input-group {
+                position: relative;
+            }
+            
+            .password-toggle {
+                position: absolute;
+                right: 0.75rem;
+                top: 50%;
+                transform: translateY(-50%);
+                padding: 0.5rem;
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body class="bg-neutral">

@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - CodeMates{% endblock %}
+
+{% block content %}
+<div class="pt-32 pb-16 bg-gradient-to-br from-[#f7f9fc] to-[#e5f0ff]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold heading-gradient mb-6 font-display text-center">About CodeMates</h1>
+            <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                Empowering businesses through innovative technology solutions and exceptional talent
+            </p>
+        </div>
+
+        <!-- Vision & Mission -->
+        <div class="grid md:grid-cols-2 gap-12 mb-16">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-primary mb-4 font-display">Our Vision</h2>
+                <p class="text-gray-600">
+                    To be the leading platform connecting businesses with exceptional tech talent, driving innovation and digital transformation across industries.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-primary mb-4 font-display">Our Mission</h2>
+                <p class="text-gray-600">
+                    To deliver high-quality, scalable solutions through our network of skilled professionals while maintaining the highest standards of excellence and client satisfaction.
+                </p>
+            </div>
+        </div>
+
+        <!-- Values -->
+        <div class="bg-white p-8 rounded-xl shadow-lg mb-16">
+            <h2 class="text-3xl font-bold text-primary mb-8 font-display text-center">Our Core Values</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-primary mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-2">Excellence</h3>
+                    <p class="text-gray-600">Committed to delivering the highest quality in every project</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-primary mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-2">Collaboration</h3>
+                    <p class="text-gray-600">Building strong partnerships with clients and team members</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-primary mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-2">Innovation</h3>
+                    <p class="text-gray-600">Staying ahead with cutting-edge technologies and solutions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Us Content -->
+        <div class="bg-white p-8 rounded-xl shadow-lg mb-16">
+            <h2 class="text-3xl font-bold text-primary mb-6 font-display text-center">About Us</h2>
+            <div class="prose max-w-none text-gray-600 space-y-4">
+                <p>We are a team of dedicated professionals offering end-to-end technology services with a clear and focused approach — code, analyze and deploy. This simple yet powerful philosophy drives everything we do.</p>
+                <p>We start by writing clean, scalable code that forms the backbone of robust digital solutions. We analyze data, user behavior and business needs to guide design and development with purpose and precision. And we deploy reliable, high-performing applications and systems that deliver real value to our clients.</p>
+                <p>With a passion for innovation and a commitment to quality, we help businesses turn ideas into impactful digital experiences. Whether it's full stack development, data science or UI/UX design, we bring your vision to life through thoughtful execution and smart technology.</p>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="bg-white p-8 rounded-xl shadow-lg mb-16">
+            <h2 class="text-3xl font-bold text-primary mb-8 font-display text-center">Our Leadership</h2>
+            
+            <!-- Founder -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-primary mb-6 text-center">Founder</h3>
+                <div class="flex justify-center">
+                    <div class="text-center px-6">
+                        <div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary p-1 mb-4 mx-auto overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/team/founder.jpg') }}" 
+                                 alt="Shrinivas G. H" 
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary">Mr. Shrinivas G. H</h4>
+                        <p class="text-gray-600">Founder & CEO</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Co-founders -->
+            <div>
+                <h3 class="text-2xl font-bold text-primary mb-6 text-center">Co-Founders</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <div class="text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-primary/80 to-secondary/80 p-1.5 mb-6 mx-auto overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
+                            <img src="{{ url_for('static', filename='images/team/narasareddy.jpg') }}" 
+                                 alt="Narasareddy A" 
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary">Narasareddy A</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-primary/80 to-secondary/80 p-1.5 mb-6 mx-auto overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
+                            <img src="{{ url_for('static', filename='images/team/basavaraja.jpg') }}" 
+                                 alt="Basavaraja H. G." 
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary">Basavaraja H. G.</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-primary/80 to-secondary/80 p-1.5 mb-6 mx-auto overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
+                            <img src="{{ url_for('static', filename='images/team/yusuf.jpg') }}" 
+                                 alt="Syed Yusuf K." 
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary">Syed Yusuf K.</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-primary/80 to-secondary/80 p-1.5 mb-6 mx-auto overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
+                            <img src="{{ url_for('static', filename='images/team/danish.jpg') }}" 
+                                 alt="Syed Danish" 
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary">Syed Danish</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-primary/80 to-secondary/80 p-1.5 mb-6 mx-auto overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
+                            <img src="{{ url_for('static', filename='images/team/ramachandram.jpg') }}" 
+                                 alt="Ramachandram" 
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary">Ramachandram</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-br from-primary/80 to-secondary/80 p-1.5 mb-6 mx-auto overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
+                            <img src="{{ url_for('static', filename='images/team/arun.jpg') }}" 
+                                 alt="Arun Kumar" 
+                                 class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary">Arun Kumar</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Values -->
+        <div class="bg-white p-8 rounded-xl shadow-lg mb-16">
+            <h2 class="text-3xl font-bold text-primary mb-8 font-display text-center">Our Core Values</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-primary mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-2">Excellence</h3>
+                    <p class="text-gray-600">Committed to delivering the highest quality in every project</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-primary mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-2">Collaboration</h3>
+                    <p class="text-gray-600">Building strong partnerships with clients and team members</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-primary mb-4">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-2">Innovation</h3>
+                    <p class="text-gray-600">Staying ahead with cutting-edge technologies and solutions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

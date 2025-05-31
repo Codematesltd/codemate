@@ -1,1033 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Your Project - CodeMates</title>
-    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='images/fav.png') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#673AB7',
-                        secondary: '#009688',
-                        accent: '#FFD700',
-                        neutral: '#FFFFFF'
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" rel="stylesheet">
-    <style>
-        .country-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .country-option .flag {
-            font-size: 1.2em;
-            line-height: 1;
-        }
-        select option {
-            font-family: system-ui;  /* Use system font for better emoji support */
-        }
-        .spinner {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #673AB7;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            animation: spin 0.7s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg);}
-            100% { transform: rotate(360deg);}
-        }
-        @media (max-width: 1024px) {
-            .lg\:col-span-2, .lg\:col-span-3, .lg\:grid-cols-5 {
-                grid-column: span 1 / span 1 !important;
-                grid-template-columns: 1fr !important;
-            }
-        }
-        @media (max-width: 768px) {
-            .max-w-7xl, .w-full {
-                max-width: 100vw !important;
-            }
-            .p-8, .py-12, .px-4, .sm\:px-6, .lg\:px-8 {
-                padding: 1rem !important;
-            }
-            .rounded-2xl, .rounded-lg {
-                border-radius: 0.5rem !important;
-            }
-        }
-        @media (max-width: 480px) {
-            .text-3xl, .text-lg, .text-base {
-                font-size: 1.1rem !important;
-            }
-        }
-        .glass {
-            background: rgba(255,255,255,0.7);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-            backdrop-filter: blur(8px);
-            border-radius: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.18);
-        }
-        .form-section {
-            background: linear-gradient(135deg, #fff 60%, #f3e8ff 100%);
-            box-shadow: 0 4px 24px 0 rgba(103,58,183,0.10);
-            border-radius: 1.5rem;
-            border: 1px solid #ede7f6;
-        }
-        .form-section input:focus, .form-section textarea:focus, .form-section select:focus {
-            border-color: #673AB7 !important;
-            box-shadow: 0 0 0 2px #673AB722;
-        }
-        .form-section input, .form-section textarea, .form-section select {
-            transition: border 0.2s, box-shadow 0.2s;
-        }
-        .form-section label {
-            font-weight: 600;
-            letter-spacing: 0.01em;
-        }
-        .form-section button[type="submit"] {
-            background: linear-gradient(90deg, #673AB7 0%, #009688 100%);
-            box-shadow: 0 2px 8px 0 #673ab71a;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            transition: transform 0.1s, box-shadow 0.2s;
-        }
-        .form-section button[type="submit"]:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 6px 24px 0 #673ab733;
-        }
-        .info-section {
-            background: linear-gradient(135deg, #673AB7 60%, #009688 100%);
-            color: #fff;
-            box-shadow: 0 4px 24px 0 rgba(103,58,183,0.18);
-            border-radius: 1.5rem;
-            border: 1px solid #ede7f6;
-        }
-        .info-section h2 {
-            text-shadow: 0 2px 8px #0002;
-        }
-        .info-section .icon-bg {
-            background: rgba(255,255,255,0.12);
-            border-radius: 1rem;
-            padding: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .info-section svg {
-            filter: drop-shadow(0 2px 6px #0002);
-        }
+{% extends "base.html" %}
 
-        /* Enhanced Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .grid-cols-5 {
-                display: flex;
-                flex-direction: column;
-            }
+{% block title %}Start a Project - CodeMates{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Form and card styles */
+    .glass {
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+        backdrop-filter: blur(8px);
+        border-radius: 1.5rem;
+        border: 1px solid rgba(255,255,255,0.18);
+    }
+    
+    .form-section {
+        background: linear-gradient(135deg, #fff 60%, #f3e8ff 100%);
+        box-shadow: 0 4px 24px 0 rgba(103,58,183,0.10);
+        border-radius: 1.5rem;
+        border: 1px solid #ede7f6;
+    }
+    
+    /* Form interactions */
+    .form-section input:focus, 
+    .form-section textarea:focus, 
+    .form-section select:focus {
+        border-color: #673AB7 !important;
+        box-shadow: 0 0 0 2px #673AB722;
+    }
+    
+    /* Spinner animation */
+    .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 4px solid #fff;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .max-w-2xl {
+            width: 95% !important;
+            margin: 0 auto;
+        }
+        
+        input, select, textarea {
+            font-size: 16px !important; /* Prevent zoom on mobile */
+        }
+        
+        .form-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mt-16">
+    <div class="max-w-2xl mx-auto py-12 px-4">
+        <div class="glass shadow-2xl rounded-2xl overflow-hidden p-8">
+            <h2 class="text-3xl font-extrabold text-primary mb-6">Start Your Project</h2>
             
-            .info-section {
-                order: 2;
-                margin-top: 2rem;
-            }
-            
-            .form-section {
-                order: 1;
-            }
-
-            input, select, textarea {
-                font-size: 16px !important; /* Prevent zoom on mobile */
-            }
-
-            .space-y-6 > * {
-                margin-top: 1.5rem;
-            }
-
-            .icon-bg {
-                padding: 0.5rem;
-            }
-
-            .space-y-8 {
-                margin: 1rem 0;
-            }
-
-            #additionalServicesContainer {
-                grid-template-columns: 1fr !important;
-            }
-
-            .grid.md\:grid-cols-2 {
-                grid-template-columns: 1fr !important;
-            }
-        }
-
-        /* Touch-Friendly Improvements */
-        @media (max-width: 480px) {
-            .glass {
-                border-radius: 1rem;
-                margin: 0.5rem;
-                backdrop-filter: none;
-                background: rgba(255,255,255,0.95);
-            }
-
-            .form-section {
-                padding: 1rem !important;
-            }
-
-            .info-section {
-                padding: 1.5rem !important;
-            }
-
-            input[type="file"] {
-                padding: 0.75rem !important;
-            }
-
-            /* Better touch targets */
-            button, 
-            input[type="submit"],
-            .flex.items-center a,
-            label[for="reference_images"] {
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Improve file upload area */
-            .border-dashed {
-                padding: 1rem !important;
-            }
-
-            #imagePreview {
-                grid-template-columns: 1fr !important;
-            }
-
-            /* Better form spacing */
-            .space-y-2 > * {
-                margin-top: 0.75rem !important;
-            }
-
-            /* Country code select improvements */
-            #country_code {
-                width: 140px !important;
-            }
-        }
-
-        /* Improved scroll handling */
-        @media (max-height: 800px) {
-            .py-12 {
-                padding-top: 1rem;
-                padding-bottom: 1rem;
-            }
-        }
-
-        /* Handle orientation changes */
-        @media screen and (orientation: landscape) and (max-height: 500px) {
-            .max-w-7xl {
-                max-width: 100%;
-                margin: 0.5rem;
-            }
-            
-            .grid.lg\:grid-cols-5 {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .info-section {
-                flex: 1;
-                max-width: 300px;
-            }
-
-            .form-section {
-                flex: 2;
-            }
-        }
-
-        /* Enhanced Form Container Positioning */
-        @media (max-width: 1024px) {
-            .glass {
-                margin: 0.5rem;
-                padding: 0;
-            }
-            
-            .grid.lg\:grid-cols-5 {
-                padding: 0;
-                gap: 0;
-            }
-
-            .info-section {
-                border-radius: 0;
-                border-top-left-radius: 1rem;
-                border-top-right-radius: 1rem;
-            }
-
-            .form-section {
-                border-radius: 0;
-                border-bottom-left-radius: 1rem;
-                border-bottom-right-radius: 1rem;
-            }
-        }
-
-        /* Better Form Field Spacing */
-        @media (max-width: 768px) {
-            .form-section {
-                padding: 1rem !important;
-            }
-
-            .form-section .space-y-6 > * {
-                margin-top: 1.25rem !important;
-                margin-bottom: 1.25rem !important;
-            }
-
-            .form-section input,
-            .form-section select,
-            .form-section textarea {
-                margin: 0.25rem 0;
-                width: 100% !important;
-            }
-
-            /* Fix country code select width */
-            .flex.gap-2 {
-                display: grid;
-                grid-template-columns: 120px 1fr;
-                gap: 0.5rem;
-            }
-
-            /* Better spacing for additional services */
-            #additionalServicesContainer label {
-                padding: 0.75rem;
-            }
-
-            /* File upload area improvements */
-            .border-dashed {
-                margin: 0.5rem 0;
-            }
-        }
-
-        /* Fix form overflow on small screens */
-        @media (max-width: 480px) {
-            .max-w-7xl {
-                padding: 0 !important;
-            }
-            
-            .glass.shadow-2xl {
-                box-shadow: none;
-                border-radius: 0;
-                margin: 0;
-            }
-
-            /* Adjust file upload preview grid */
-            #imagePreview {
-                padding: 0.5rem;
-            }
-
-            /* Better button spacing */
-            .form-section button[type="submit"] {
-                margin-top: 1rem;
-                margin-bottom: 0.5rem;
-            }
-
-            /* Fix label wrapping */
-            .form-section label {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        }
-
-        /* Landscape mode optimization */
-        @media screen and (orientation: landscape) and (max-height: 600px) {
-            .py-12 {
-                padding: 0.5rem 0;
-            }
-
-            .grid.lg\:grid-cols-5 {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .info-section {
-                width: 300px;
-                min-width: 300px;
-                border-radius: 1rem 0 0 1rem;
-            }
-
-            .form-section {
-                flex: 1;
-                border-radius: 0 1rem 1rem 0;
-                overflow-y: auto;
-                max-height: 90vh;
-            }
-        }
-    </style>
-</head>
-<body class="bg-neutral">
-    <nav class="bg-primary shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex-shrink-0 flex items-center">
-                    <img src="/static/images/fav.png" alt="CodeMates Logo" class="h-10 w-10 mr-3 rounded-full bg-white object-contain" />
-                    <a href="{{ url_for('index') }}" class="text-2xl font-bold text-white">CodeMates</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="{{ url_for('consultation') }}"
-                       class="bg-gradient-to-r from-secondary to-primary text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition">
-                        Get a Free Consultation
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="max-w-7xl mx-auto py-12 px-2 sm:px-2 lg:px-8">
-        <div class="glass shadow-2xl rounded-2xl overflow-hidden">
-            <div class="grid lg:grid-cols-5 gap-0">
-                <!-- Left Section - Info -->
-                <div class="info-section lg:col-span-2 flex flex-col justify-start p-10 items-center">
-                    <a href="{{ url_for('consultation') }}"
-                       class="bg-gradient-to-r from-secondary to-primary text-white px-8 py-4 rounded-xl text-xl font-bold shadow-lg hover:opacity-90 transition mb-8 w-full text-center">
-                        Get a Free Consultation
-                    </a>
-                    <p class="mb-8 text-white/90 text-lg text-center">Transform your ideas into reality with our expert development team.</p>
-                    <div class="space-y-8">
-                        <div class="flex items-start space-x-4">
-                            <div class="icon-bg">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-xl">Expert Development</h3>
-                                <p class="text-white/80 text-base">Skilled team with years of experience</p>
-                            </div>
+            <form method="POST" class="form-section p-6 space-y-6" enctype="multipart/form-data">
+                {% if error %}
+                <div class="text-red-500 text-center">{{ error }}</div>
+                {% endif %}
+                
+                <!-- Personal Information -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-primary">Personal Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="name" class="block text-primary mb-1">Full Name</label>
+                            <input type="text" name="name" id="name" required 
+                                class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0">
                         </div>
-                        <div class="flex items-start space-x-4">
-                            <div class="icon-bg">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-xl">Fast Delivery</h3>
-                                <p class="text-white/80 text-base">Quick turnaround on all projects</p>
-                            </div>
+                        <div>
+                            <label for="email" class="block text-primary mb-1">Email</label>
+                            <input type="email" name="email" id="email" required 
+                                class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0">
                         </div>
-                        <div class="flex items-start space-x-4">
-                            <div class="icon-bg">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-xl">Secure & Reliable</h3>
-                                <p class="text-white/80 text-base">Your project is in safe hands</p>
-                            </div>
+                        <div>
+                            <label for="mobile" class="block text-primary mb-1">Mobile</label>
+                            <input type="tel" name="mobile" id="mobile" required 
+                                class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0">
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Section - Form -->
-                <div class="form-section lg:col-span-3 p-10 bg-white">
-                    <form action="{{ url_for('order') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label for="name" class="block text-sm font-medium text-primary">Full Name</label>
-                                <input type="text" name="name" id="name" required
-                                    pattern="[A-Za-z\s]+"
-                                    class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
-                                    oninvalid="this.setCustomValidity('Please enter a valid name (letters only)')"
-                                    oninput="this.setCustomValidity('')">
-                                <p class="text-red-500 text-xs mt-1 hidden" id="nameError"></p>
-                            </div>
-                            <div class="space-y-2">
-                                <label for="email" class="block text-sm font-medium text-primary">Email</label>
-                                <input type="email" name="email" id="email" required
-                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                    class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
-                                    oninvalid="this.setCustomValidity('Please enter a valid email address')"
-                                    oninput="this.setCustomValidity('')">
-                                <p class="text-red-500 text-xs mt-1 hidden" id="emailError"></p>
-                            </div>
-                            <div class="space-y-2">
-                                <label for="phone" class="block text-sm font-medium text-primary">Phone Number</label>
-                                <div class="flex gap-2">
-                                    <select name="country_code" id="country_code" required 
-                                        class="block w-[180px] px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors text-base">
-                                        <option value="+91" selected>🇮🇳 +91 India</option>
-                                        <option value="+1">🇺🇸 +1 USA</option>
-                                        <option value="+44">🇬🇧 +44 UK</option>
-                                        <option value="+61">🇦🇺 +61 Australia</option>
-                                        <option value="+86">🇨🇳 +86 China</option>
-                                        <option value="+81">🇯🇵 +81 Japan</option>
-                                        <option value="+49">🇩🇪 +49 Germany</option>
-                                        <option value="+33">🇫🇷 +33 France</option>
-                                        <option value="+7">🇷🇺 +7 Russia</option>
-                                        <option value="+55">🇧🇷 +55 Brazil</option>
-                                        <option value="+39">🇮🇹 +39 Italy</option>
-                                        <option value="+34">🇪🇸 +34 Spain</option>
-                                        <option value="+82">🇰🇷 +82 South Korea</option>
-                                        <option value="+52">🇲🇽 +52 Mexico</option>
-                                        <option value="+65">🇸🇬 +65 Singapore</option>
-                                        <option value="+971">🇦🇪 +971 UAE</option>
-                                        <option value="+966">🇸🇦 +966 Saudi Arabia</option>
-                                        <option value="+20">🇪🇬 +20 Egypt</option>
-                                        <option value="+27">🇿🇦 +27 South Africa</option>
-                                        <option value="+234">🇳🇬 +234 Nigeria</option>
-                                        <option value="+90">🇹🇷 +90 Turkey</option>
-                                    </select>
-                                    <input type="tel" name="phone" id="phone" required 
-                                        class="block flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
-                                        placeholder="Enter phone number">
-                                </div>
-                                <p class="text-red-500 text-xs mt-1 hidden" id="phoneError"></p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="service" class="block text-sm font-medium text-primary">Service Required</label>
-                            <select name="service" id="service" required
-                                class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors">
-                                <option value="">Select a service...</option>
-                                <option value="ui_ux">UI/UX Design</option>
-                                <option value="frontend">Frontend Development</option>
-                                <option value="backend">Backend Development</option>
-                                <option value="data_analysis">Data Analysis</option>
-                                <option value="data_science">Data Science</option>
-                                <option value="ml_models">ML Models</option>
-                                <option value="debugging">Debugging & Optimization</option>
-                                <option value="full_stack">Full-Stack Development</option>
-                            </select>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="block text-sm font-medium text-primary mb-3">Additional Services</label>
-                            <!-- Dynamic additional services container -->
-                            <div id="additionalServicesContainer" class="grid md:grid-cols-2 gap-4">
-                                <!-- Checkboxes will be injected here -->
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="requirements" class="block text-sm font-medium text-primary">Project Requirements</label>
-                            <textarea name="requirements" id="requirements" rows="4" required
-                                class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
-                                placeholder="Please describe your project requirements..."></textarea>
-                        </div>
-
-                        <!-- Reference Design Section -->
-                        <div class="space-y-4">
-                            <div class="border-t-2 border-gray-100 pt-4">
-                                <label class="block text-sm font-medium text-primary mb-2">Reference Designs & Images</label>
-                                <div class="space-y-4">
-                                    <!-- Reference URLs -->
-                                    <div>
-                                        <label for="reference_urls" class="block text-sm text-gray-600 mb-2">Reference Website URLs</label>
-                                        <textarea name="reference_urls" id="reference_urls" rows="2" 
-                                            class="block w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0 transition-colors"
-                                            placeholder="Enter URLs of websites you like (one per line)"></textarea>
-                                    </div>
-
-                                    <!-- File Upload -->
-                                    <div class="space-y-2">
-                                        <label class="block text-sm text-gray-600">Upload Reference Images</label>
-                                        <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-lg hover:border-primary/50 transition-colors">
-                                            <div class="space-y-2 text-center">
-                                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4-4m4-4h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                <div class="flex text-sm text-gray-600">
-                                                    <label for="reference_images" class="relative cursor-pointer bg-neutral rounded-md font-medium text-primary hover:text-secondary focus-within:outline-none">
-                                                        <span>Upload images</span>
-                                                        <input id="reference_images" name="reference_images" type="file" class="sr-only" multiple accept="image/*">
-                                                    </label>
-                                                    <p class="pl-1">or drag and drop</p>
-                                                </div>
-                                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 5MB each</p>
-                                            </div>
-                                        </div>
-                                        <!-- Preview Area -->
-                                        <div id="imagePreview" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
-                                            <!-- Preview images will be inserted here -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <button type="submit"
-                                class="w-full bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-lg text-lg font-medium hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                                Submit Project Request
-                            </button>
-                        </div>
-                    </form>
+                <!-- Project Details -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-primary">Project Details</h3>
+                    <div>
+                        <label for="service" class="block text-primary mb-1">Service Type</label>
+                        <select name="service" id="service" required 
+                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0">
+                            <option value="">Select a service...</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Frontend Development">Frontend Development</option>
+                            <option value="Backend Development">Backend Development</option>
+                            <option value="Full Stack Development">Full Stack Development</option>
+                            <option value="Data Analysis">Data Analysis</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="ML Models">ML Models</option>
+                            <option value="Code Debugging">Code Debugging</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="requirements" class="block text-primary mb-1">Project Requirements</label>
+                        <textarea name="requirements" id="requirements" rows="4" required 
+                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0"
+                            placeholder="Describe your project requirements in detail..."></textarea>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Reference Images -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-primary">Reference Images (Optional)</h3>
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-2">Upload up to 3 images</label>
+                        <input type="file" name="reference_images" multiple accept="image/*" 
+                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary focus:ring-0">
+                    </div>
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg text-lg hover:opacity-90 transition-opacity">
+                    Submit Project
+                </button>
+            </form>
         </div>
     </div>
+</div>
+{% endblock %}
 
-    <script>
-        document.getElementById('email').addEventListener('input', function(e) {
-            const email = e.target.value;
-            const emailError = document.getElementById('emailError');
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-            if (!emailRegex.test(email)) {
-                emailError.textContent = 'Please enter a valid email address';
-                emailError.classList.remove('hidden');
-                e.target.classList.add('border-red-500');
-                e.target.classList.remove('border-gray-200', 'focus:border-primary');
-            } else {
-                emailError.classList.add('hidden');
-                e.target.classList.remove('border-red-500');
-                e.target.classList.add('border-gray-200', 'focus:border-primary');
-            }
-        });
-
-        // Phone validation based on country
-        const phonePatterns = {
-            '+93': '^[0-9]{9}$',              // Afghanistan
-            '+355': '^[0-9]{9}$',             // Albania
-            '+213': '^[0-9]{9}$',             // Algeria
-            '+376': '^[0-9]{6}$',             // Andorra
-            '+244': '^[0-9]{9}$',             // Angola
-            '+54': '^[0-9]{10}$',             // Argentina
-            '+374': '^[0-9]{8}$',             // Armenia
-            '+61': '^4[0-9]{8}$',             // Australia
-            '+43': '^[0-9]{10}$',             // Austria
-            '+994': '^[0-9]{9}$',             // Azerbaijan
-            '+1': '^[2-9][0-9]{9}$',          // USA/Canada
-            '+44': '^[0-9]{10}$',             // UK
-            '+91': '^[6-9][0-9]{9}$',         // India
-            '+86': '^[1][3-9][0-9]{9}$',      // China
-            '+81': '^[0-9]{10}$',             // Japan
-            '+49': '^[0-9]{10,11}$',          // Germany
-            '+33': '^[0-9]{9}$',              // France
-            '+7': '^[0-9]{10}$',              // Russia
-            '+55': '^[0-9]{10,11}$',          // Brazil
-            '+39': '^[0-9]{10}$',             // Italy
-            '+34': '^[0-9]{9}$',              // Spain
-            '+82': '^[0-9]{9,10}$',           // South Korea
-            '+234': '^[0-9]{10}$',            // Nigeria
-            '+27': '^[0-9]{9}$',              // South Africa
-            '+52': '^[0-9]{10}$',             // Mexico
-            '+966': '^[0-9]{9}$',             // Saudi Arabia
-            '+65': '^[0-9]{8}$',              // Singapore
-            '+90': '^[0-9]{10}$',             // Turkey
-            '+971': '^[0-9]{9}$',             // UAE
-            // Add more validation patterns as needed
-        };
-
-        document.getElementById('phone').addEventListener('input', function(e) {
-            const phone = e.target.value;
-            const countryCode = document.getElementById('country_code').value;
-            const phoneError = document.getElementById('phoneError');
-            const phonePattern = phonePatterns[countryCode];
-            const phoneRegex = new RegExp(phonePattern);
-
-            // Remove non-numeric characters
-            e.target.value = phone.replace(/\D/g, '');
-
-            if (!phoneRegex.test(phone)) {
-                phoneError.textContent = `Please enter a valid phone number for ${countryCode}`;
-                phoneError.classList.remove('hidden');
-                e.target.classList.add('border-red-500');
-                e.target.classList.remove('border-gray-200', 'focus:border-primary');
-            } else {
-                phoneError.classList.add('hidden');
-                e.target.classList.remove('border-red-500');
-                e.target.classList.add('border-gray-200', 'focus:border-primary');
-            }
-        });
-
-        // Update validation when country code changes
-        document.getElementById('country_code').addEventListener('change', function() {
-            const phoneInput = document.getElementById('phone');
-            if (phoneInput.value) {
-                phoneInput.dispatchEvent(new Event('input'));
-            }
-        });
-
-        // Update form submission validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const countryCode = document.getElementById('country_code').value;
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            const phonePattern = phonePatterns[countryCode];
-            const phoneRegex = new RegExp(phonePattern);
-
-            if (!emailRegex.test(email) || !phoneRegex.test(phone)) {
-                e.preventDefault();
-                if (!emailRegex.test(email)) {
-                    document.getElementById('emailError').classList.remove('hidden');
-                }
-                if (!phoneRegex.test(phone)) {
-                    document.getElementById('phoneError').classList.remove('hidden');
-                }
-            }
-        });
-
-        // Add this before your existing JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            const countrySelect = document.getElementById('country_code');
-            
-            // Format the options to show flags properly
-            Array.from(countrySelect.options).forEach(option => {
-                const text = option.text;
-                const flag = text.match(/.*?(?= \+)/)[0]; // Extract flag emoji
-                const rest = text.substring(text.indexOf(' ') + 1); // Get the rest of the text
-                option.innerHTML = `<span class="country-option"><span class="flag">${flag}</span> ${rest}</span>`;
-            });
-        });
-
-        // Add this before existing JavaScript
-        document.getElementById('name').addEventListener('input', function(e) {
-            const name = e.target.value;
-            const nameError = document.getElementById('nameError');
-            const nameRegex = /^[A-Za-z\s]+$/;
-
-            // Remove non-letter characters
-            e.target.value = name.replace(/[^A-Za-z\s]/g, '');
-
-            if (!nameRegex.test(name)) {
-                nameError.textContent = 'Please enter a valid name (letters only)';
-                nameError.classList.remove('hidden');
-                e.target.classList.add('border-red-500');
-                e.target.classList.remove('border-gray-200', 'focus:border-primary');
-            } else {
-                nameError.classList.add('hidden');
-                e.target.classList.remove('border-red-500');
-                e.target.classList.add('border-gray-200', 'focus:border-primary');
-            }
-        });
-
-        // Update form submission validation to include name check
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const name = document.getElementById('name').value;
-            const nameRegex = /^[A-Za-z\s]+$/;
-            
-            if (!nameRegex.test(name)) {
-                e.preventDefault();
-                document.getElementById('nameError').classList.remove('hidden');
-            }
-            // ...existing validation code...
-        });
-
-        // Add this to your existing JavaScript
-        document.getElementById('reference_images').addEventListener('change', function(e) {
-            const preview = document.getElementById('imagePreview');
-            preview.innerHTML = ''; // Clear existing previews
-            
-            [...e.target.files].forEach(file => {
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('File size must not exceed 5MB');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const div = document.createElement('div');
-                    div.className = 'relative group';
-                    div.innerHTML = `
-                        <img src="${e.target.result}" class="w-full h-32 object-cover rounded-lg" />
-                        <button type="button" class="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                            onclick="this.parentElement.remove()">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    `;
-                    preview.appendChild(div);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
-
-        // Drag and drop support
-        const dropZone = document.querySelector('input[type="file"]').closest('div');
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
+{% block extra_scripts %}
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const btn = this.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.disabled = true;
+            btn.dataset.original = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span>';
         }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, highlight, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, unhighlight, false);
-        });
-
-        function highlight(e) {
-            dropZone.classList.add('border-primary');
-        }
-
-        function unhighlight(e) {
-            dropZone.classList.remove('border-primary');
-        }
-
-        dropZone.addEventListener('drop', handleDrop, false);
-
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            document.getElementById('reference_images').files = files;
-            document.getElementById('reference_images').dispatchEvent(new Event('change'));
-        }
-
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const btn = this.querySelector('button[type="submit"]');
-            if (btn) {
-                btn.disabled = true;
-                btn.dataset.original = btn.innerHTML;
-                btn.innerHTML = '<span class="spinner"></span>';
-            }
-        });
-
-        // Additional services mapping
-        const additionalServicesMap = {
-            "ui_ux": [
-                {
-                    value: "user_research_wireframing",
-                    label: "User Research & Wireframing",
-                    desc: "Understand client goals and create low-fidelity layouts."
-                },
-                {
-                    value: "basic_prototyping",
-                    label: "Basic Prototyping",
-                    desc: "Clickable demos using Figma, Adobe XD, etc."
-                }
-            ],
-            "frontend": [
-                {
-                    value: "seo_optimization",
-                    label: "SEO Optimization (On-Page)",
-                    desc: "Title tags, meta descriptions, alt attributes, semantic HTML."
-                },
-                {
-                    value: "web_performance_optimization",
-                    label: "Web Performance Optimization",
-                    desc: "Image compression, lazy loading, minify CSS/JS."
-                },
-                {
-                    value: "mobile_responsiveness",
-                    label: "Mobile Responsiveness",
-                    desc: "Ensure the site looks great on all devices."
-                }
-            ],
-            "backend": [
-                {
-                    value: "basic_server_setup",
-                    label: "Basic Server Setup",
-                    desc: "Linux server setup, Nginx/Apache, database installation."
-                },
-                {
-                    value: "api_development",
-                    label: "API Development",
-                    desc: "Build simple REST APIs with Flask, FastAPI, or Express."
-                },
-                {
-                    value: "basic_auth_systems",
-                    label: "Basic Authentication Systems",
-                    desc: "Login/Signup with JWT or Sessions."
-                }
-            ],
-            "data_analysis": [
-                {
-                    value: "data_cleaning",
-                    label: "Data Cleaning",
-                    desc: "Removing nulls, duplicates, formatting datasets."
-                },
-                {
-                    value: "simple_data_visualization",
-                    label: "Simple Data Visualization",
-                    desc: "Using Matplotlib, Seaborn, Power BI."
-                }
-            ],
-            "data_science": [
-                {
-                    value: "simple_predictive_models",
-                    label: "Simple Predictive Models",
-                    desc: "Linear regression, classification models."
-                },
-                {
-                    value: "basic_model_deployment",
-                    label: "Basic Model Deployment",
-                    desc: "Deploy small models with Flask or FastAPI APIs."
-                }
-            ],
-            "ml_models": [
-                {
-                    value: "custom_small_ml_projects",
-                    label: "Custom Small ML Projects",
-                    desc: "Recommendation systems, sentiment analysis."
-                }
-            ],
-            "debugging": [
-                {
-                    value: "bug_fixing",
-                    label: "Bug Fixing",
-                    desc: "Frontend glitches, backend errors, database issues."
-                },
-                {
-                    value: "basic_code_optimization",
-                    label: "Basic Code Optimization",
-                    desc: "Improve slow loading, refactor small functions."
-                }
-            ],
-            "full_stack": [
-                {
-                    value: "website_deployment",
-                    label: "Website Deployment",
-                    desc: "Deploy on platforms like Vercel, Netlify, Heroku, or basic VPS."
-                },
-                {
-                    value: "basic_hosting_setup",
-                    label: "Basic Hosting Setup",
-                    desc: "Domain linking, SSL certificate setup."
-                }
-            ]
-        };
-
-        // Render additional services based on selected service
-        function renderAdditionalServices(service) {
-            const container = document.getElementById('additionalServicesContainer');
-            container.innerHTML = '';
-            if (additionalServicesMap[service]) {
-                additionalServicesMap[service].forEach(opt => {
-                    const id = `additional_${opt.value}`;
-                    container.innerHTML += `
-                        <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                            <input type="checkbox" name="additional_services" value="${opt.label}" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary mt-1">
-                            <span class="ml-3">
-                                <span class="font-medium">${opt.label}</span>
-                                <span class="block text-xs text-gray-500">${opt.desc}</span>
-                            </span>
-                        </label>
-                    `;
-                });
-            } else {
-                container.innerHTML = `<p class="text-gray-400 text-sm col-span-2">Select a service to see additional options.</p>`;
-            }
-        }
-
-        // Initial render on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const serviceSelect = document.getElementById('service');
-            renderAdditionalServices(serviceSelect.value);
-            serviceSelect.addEventListener('change', function() {
-                renderAdditionalServices(this.value);
-            });
-        });
-
-        // ...existing code...
-    </script>
-    <!-- Footer -->
-    <footer class="bg-[#512DA8] text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Main Footer Content -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <!-- Company Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">CodeMates</h3>
-                    <div class="flex items-center mb-4">
-                        <img src="{{ url_for('static', filename='images/fav.png') }}" alt="CodeMates Logo" class="h-10 w-auto mr-2">
-                    </div>
-                    <p class="text-white/90 text-sm leading-relaxed mb-4 text-justify">
-                        Empowering businesses with future-ready digital solutions, delivered by a curated network of top-tier freelancers—making advanced technology accessible, reliable, and impactful.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-white/90 hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-white/90 hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-white/90 hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ url_for('index') }}" class="text-white/90 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="{{ url_for('consultation') }}" class="text-white/90 hover:text-white transition-colors">Free Consultation</a></li>
-                        <li><a href="{{ url_for('order') }}" class="text-white/90 hover:text-white transition-colors">Start a Project</a></li>
-                        <li><a href="{{ url_for('client_login') }}" class="text-white/90 hover:text-white transition-colors">Client Portal</a></li>
-                    </ul>
-                </div>
-
-                <!-- Services -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Our Services</h3>
-                    <ul class="space-y-2">
-                        <li class="text-white/90">UI/UX Design</li>
-                        <li class="text-white/90">Frontend Development</li>
-                        <li class="text-white/90">Backend Development</li>
-                        <li class="text-white/90">Full Stack Development</li>
-                        <li class="text-white/90">Data Analysis</li>
-                        <li class="text-white/90">Data Science</li>
-                        <li class="text-white/90">ML Model Development</li>
-                        <li class="text-white/90">Code Debugging</li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                            <a href="mailto:codematesltd@gmail.com" class="text-white/90 hover:text-white transition-colors">codematesltd@gmail.com</a>
-                        </li>
-                        <li class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="text-white/90">Kalaburgi, Karnataka, India</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Bottom Footer -->
-            <div class="pt-8 border-t border-white/10">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="text-sm text-white/90">
-                        © 2025 CodeMates. All rights reserved.
-                    </div>
-                    <div class="flex space-x-4 text-sm text-white/90 md:justify-end">
-                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+    });
+</script>
+{% endblock %}

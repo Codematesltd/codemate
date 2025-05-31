@@ -1,1158 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!-- Fixed viewport meta tag -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='images/fav.png') }}">
-    <title>CodeMates - Code, Analyze, Deploy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#673AB7',    // Deep Purple
-                        secondary: '#009688',  // Teal
-                        accent: '#FFD700',     // Gold
-                        neutral: '#FFFFFF'     // White
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-neutral">
-    <!-- Navigation -->
-    <nav class="bg-primary shadow-lg fixed w-full top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ url_for('index') }}" class="flex items-center">
-                        <img src="/static/images/fav.png" alt="CodeMates Logo" class="h-10 w-auto mr-2">
-                        <span class="text-2xl font-bold text-white">CodeMates</span>
-                    </a>
-                </div>
-                <!-- Mobile menu button -->
-                <div class="flex items-center sm:hidden">
-                    <button id="mobile-menu-button" class="text-white hover:text-white/80 p-2">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-                <!-- Desktop menu -->
-                <div class="hidden sm:flex items-center space-x-4">
-                    <a href="{{ url_for('client_login') }}" 
-                       class="text-white hover:text-white/80 font-medium">
-                        Sign In
-                    </a>
-                    <a href="{{ url_for('consultation') }}"
-                       class="bg-white/10 text-white px-4 py-2 rounded-lg font-semibold hover:bg-white/20 transition">
-                        Free Consultation
-                    </a>
-                    <a href="{{ url_for('order') }}"
-                       class="bg-gradient-to-r from-secondary to-primary text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition">
-                        Order Now
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden sm:hidden bg-primary/95 backdrop-blur-sm">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ url_for('client_login') }}" 
-                   class="block text-white hover:bg-white/10 px-3 py-2 rounded-md text-base font-medium">
-                    Sign In
-                </a>
-                <a href="{{ url_for('consultation') }}"
-                   class="block text-white hover:bg-white/10 px-3 py-2 rounded-md text-base font-medium">
-                    Free Consultation
-                </a>
-                <a href="{{ url_for('order') }}"
-                   class="block text-white bg-gradient-to-r from-secondary to-primary hover:opacity-90 px-3 py-2 rounded-md text-base font-medium">
-                    Order Now
-                </a>
-            </div>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <!-- Add margin-top to account for fixed navbar -->
-    <div class="mt-16">
-        <!-- Hero Section -->
+{% block title %}Home - CodeMates{% endblock %}
 
-        <div class="bg-[#F3F4F6]">
-            <!-- Hero Carousel -->
-            <div class="relative h-[600px] md:h-[500px]">
-                <div class="overflow-hidden h-full">
-                    <div class="flex transition-transform duration-500 ease-in-out" id="heroCarousel">
-                        <!-- Slide 1: Yukti Fest College Website -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/vtu.png" alt="Yukti Fest College Website" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">Yukti Fest College Website</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        A vibrant and responsive website designed to showcase Yukti Fest, featuring event details, registration, schedules, and live updates for participants and visitors.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 2: AI News Web App -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/news.png" alt="AI News Web App" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">AI News Web App</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        An intelligent news platform that uses AI to curate and summarize trending news articles, delivering personalized and real-time updates to users.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 3: KisanSetu -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/kisansetu.png" alt="KisanSetu" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">KisanSetu</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        A farmer-focused platform connecting farmers directly to buyers and services, offering market rates, weather updates, and agricultural resources to empower rural communities.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 4: Student Performance Analyzer -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/student.jpg" alt="Student Performance Analyzer" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">Student Performance Analyzer</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        Student Performance Analyzer is a data-driven tool that evaluates and visualizes academic performance. It provides class performance analysis, individual student tracking, and attendance analytics using interactive graphs. The tool also offers SGPA-based insights for semester-wise progress and predictive analysis.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 5: e-Virtual Study Assistant -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/assist.png" alt="e-Virtual Study Assistant" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">e-Virtual Study Assistant</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        e-Virtual Study Assistant is a web-based tool for managing study schedules and resources. It uses Web Speech API for voice commands and hands-free interaction. Features include task management and access to study materials like notes and videos. A responsive interface ensures smooth user experience.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Duplicated Slide 1: Yukti Fest College Website -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/vtu.png" alt="Yukti Fest College Website" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">Yukti Fest College Website</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        A vibrant and responsive website designed to showcase Yukti Fest, featuring event details, registration, schedules, and live updates for participants and visitors.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Duplicated Slide 2: AI News Web App -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/news.png" alt="AI News Web App" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">AI News Web App</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        An intelligent news platform that uses AI to curate and summarize trending news articles, delivering personalized and real-time updates to users.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Duplicated Slide 3: KisanSetu -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/kisansetu.png" alt="KisanSetu" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">KisanSetu</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        A farmer-focused platform connecting farmers directly to buyers and services, offering market rates, weather updates, and agricultural resources to empower rural communities.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Duplicated Slide 4: Student Performance Analyzer -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/student.jpg" alt="Student Performance Analyzer" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">Student Performance Analyzer</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        Student Performance Analyzer is a data-driven tool that evaluates and visualizes academic performance. It provides class performance analysis, individual student tracking, and attendance analytics using interactive graphs. The tool also offers SGPA-based insights for semester-wise progress and predictive analysis.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Duplicated Slide 5: e-Virtual Study Assistant -->
-                        <div class="min-w-full relative">
-                            <img src="/static/images/assist.png" alt="e-Virtual Study Assistant" class="w-full h-[600px] md:h-[500px] object-contain bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-secondary/50 flex items-center">
-                                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                                    <h2 class="text-5xl font-bold mb-4">e-Virtual Study Assistant</h2>
-                                    <p class="text-xl mb-8 max-w-2xl text-justify">
-                                        e-Virtual Study Assistant is a web-based tool for managing study schedules and resources. It uses Web Speech API for voice commands and hands-free interaction. Features include task management and access to study materials like notes and videos. A responsive interface ensures smooth user experience.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Carousel Controls -->
-                <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-primary/80 p-2 rounded-full shadow-lg hover:bg-primary text-white" onclick="moveCarousel(-1)">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-primary/80 p-2 rounded-full shadow-lg hover:bg-primary text-white" onclick="moveCarousel(1)">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </button>
-                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
-                    <button class="w-3 h-3 rounded-full bg-primary/50 hover:bg-primary" onclick="moveCarousel(0)"></button>
-                    <button class="w-3 h-3 rounded-full bg-primary/50 hover:bg-primary" onclick="moveCarousel(1)"></button>
-                    <button class="w-3 h-3 rounded-full bg-primary/50 hover:bg-primary" onclick="moveCarousel(2)"></button>
-                    <button class="w-3 h-3 rounded-full bg-primary/50 hover:bg-primary" onclick="moveCarousel(3)"></button>
-                    <button class="w-3 h-3 rounded-full bg-primary/50 hover:bg-primary" onclick="moveCarousel(4)"></button>
-                </div>
-
-            </div>
-
-            <!-- Hero Content -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <h1 class="text-5xl sm:text-3xl font-bold text-[#673AB7] mb-4 text-center">Code, Analyze, Deploy</h1>
-                <p class="text-xl sm:text-lg text-[#6B7280] mb-8 text-center">End-to-End Tech Solutions for Your Business</p>
-                <div class="flex justify-center">
-                    <a href="{{ url_for('consultation') }}" 
-                       class="bg-gradient-to-r from-[#7E57C2] to-[#673AB7] text-white px-8 py-3 rounded-lg text-lg hover:opacity-90 transition text-center">
-                        Get a Free Consultation
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        
-        <!-- Services -->
-        <section class="bg-neutral py-8 sm:py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-primary">Our Services</h2>
-                <div class="relative">
-                    <div class="overflow-hidden">
-                        <div class="flex transition-transform duration-500 ease-in-out" id="servicesSlider" style="will-change: transform;">
-                            <!-- Service Card Template -->
-                            <div class="min-w-full px-2 sm:px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-4 sm:p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
-                                        <div class="p-2 sm:p-3 bg-gradient-to-r from-primary to-secondary rounded-lg self-center sm:self-start">
-                                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1 text-center sm:text-left">
-                                            <h3 class="font-bold text-xl sm:text-2xl mb-2 sm:mb-3 text-primary flex flex-col sm:flex-row items-center sm:items-center">
-                                                <span>UI/UX Design</span>
-                                                <span class="mt-2 sm:mt-0 sm:ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-sm sm:text-base leading-relaxed text-center sm:text-justify">
-                                                Crafting intuitive, user-centric interfaces that boost engagement and conversions. From wireframes to prototypes, we design experiences users love.
-                                            </p>
-                                            <div class="mt-4 flex items-center justify-center sm:justify-start text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Repeat similar structure for other services -->
-                            <div class="min-w-full px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex items-start space-x-4">
-                                        <div class="p-3 bg-gradient-to-r from-primary to-secondary rounded-lg">
-                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-2xl sm:text-xl mb-3 text-primary flex items-center">
-                                                Frontend Development
-                                                <span class="ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-lg sm:text-base leading-relaxed text-justify">
-                                                Building responsive, high-performance web apps with React, Angular, or Vue. Pixel-perfect code that works flawlessly across all devices.
-                                            </p>
-                                            <div class="mt-4 flex items-center text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex items-start space-x-4">
-                                        <div class="p-3 bg-gradient-to-r from-primary to-secondary rounded-lg">
-                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-2xl sm:text-xl mb-3 text-primary flex items-center">
-                                                Backend Development
-                                                <span class="ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-lg sm:text-base leading-relaxed text-justify">
-                                                Scalable server-side solutions powered by Node.js, Django, or Spring. Secure APIs, databases, and cloud architecture tailored to your needs.
-                                            </p>
-                                            <div class="mt-4 flex items-center text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex items-start space-x-4">
-                                        <div class="p-3 bg-gradient-to-r from-primary to-secondary rounded-lg">
-                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-2xl sm:text-xl mb-3 text-primary flex items-center">
-                                                Data Analysis
-                                                <span class="ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-lg sm:text-base leading-relaxed text-justify">
-                                                Transform raw data into actionable insights. Advanced analytics with Python, SQL, and Power BI to drive smarter business decisions.
-                                            </p>
-                                            <div class="mt-4 flex items-center text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex items-start space-x-4">
-                                        <div class="p-3 bg-gradient-to-r from-primary to-secondary rounded-lg">
-                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-2xl sm:text-xl mb-3 text-primary flex items-center">
-                                                Data Science
-                                                <span class="ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-lg sm:text-base leading-relaxed text-justify">
-                                                Predictive modeling, NLP, and statistical analysis to uncover hidden patterns. Turn data into your competitive edge.
-                                            </p>
-                                            <div class="mt-4 flex items-center text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex items-start space-x-4">
-                                        <div class="p-3 bg-gradient-to-r from-primary to-secondary rounded-lg">
-                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-2xl sm:text-xl mb-3 text-primary flex items-center">
-                                                ML Models
-                                                <span class="ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-lg sm:text-base leading-relaxed text-justify">
-                                                Custom machine learning solutions for automation, recommendations, and AI-driven growth. Deploy models that learn and adapt.
-                                            </p>
-                                            <div class="mt-4 flex items-center text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex items-start space-x-4">
-                                        <div class="p-3 bg-gradient-to-r from-primary to-secondary rounded-lg">
-                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-2xl sm:text-xl mb-3 text-primary flex items-center">
-                                                Debugging & Optimization
-                                                <span class="ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-lg sm:text-base leading-relaxed text-justify">
-                                                Fix bugs, bottlenecks, and security gaps fast. We troubleshoot full-stack systems to keep your projects running smoothly.
-                                            </p>
-                                            <div class="mt-4 flex items-center text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full px-4">
-                                <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-lg shadow-lg border-l-4 border-primary max-w-3xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                                    <div class="flex items-start space-x-4">
-                                        <div class="p-3 bg-gradient-to-r from-primary to-secondary rounded-lg">
-                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-2xl sm:text-xl mb-3 text-primary flex items-center">
-                                                Full-Stack Web Development
-                                                <span class="ml-2 text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">Popular</span>
-                                            </h3>
-                                            <p class="text-gray-600 text-lg sm:text-base leading-relaxed text-justify">
-                                                End-to-end web solutions—from UI to databases. One team, seamless integration, and faster time-to-market.
-                                            </p>
-                                            <div class="mt-4 flex items-center text-sm text-primary">
-                                                <span class="font-semibold">Learn More</span>
-                                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Updated Navigation Buttons -->
-                    <button id="prevService" type="button" class="absolute left-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-secondary p-3 rounded-full text-white z-10 shadow-lg hover:opacity-90 transition-opacity">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                    </button>
-                    <button id="nextService" type="button" class="absolute right-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-secondary to-primary p-3 rounded-full text-white z-10 shadow-lg hover:opacity-90 transition-opacity">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </button>
-                    <!-- Updated Indicators -->
-                    <div class="flex justify-center mt-8 space-x-2" id="serviceIndicators">
-                        <button type="button" class="w-8 h-2 rounded-full bg-gradient-to-r from-primary to-secondary"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20"></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Team -->
-        <section class="bg-secondary/10 py-8 sm:py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-primary">Meet Our Developers</h2>
-                <div class="relative">
-                    <div class="overflow-hidden">
-                        <div class="flex transition-transform duration-500 ease-in-out" id="teamCarousel">
-                            <!-- First 3 members -->
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Shrinivas section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/shri.jpg" alt="Shrinivas Nadager" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Shrinivas Nadager</h3>
-                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/shrinivas-nadager" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:shrinivasnadager03@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Narasareddy section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/reddy.jpg" alt="Manikanta" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Narasareddy</h3>
-                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/narasareddy-annepu-17a233319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:narasareddy8296@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Basavaraja section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/basu.jpg" alt="Basavaraj Gurikar" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Basavaraja H. Gurikar</h3>
-                                    <p class="text-gray-600">Security Engineer | Data analyst</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/basavaraj-h-gurikar-95b739284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:basavarajgurikar2004@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Next 3 members -->
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Danish section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/danish.jpg" alt="Syed Danish" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Syed Danish</h3>
-                                    <p class="text-gray-600">Backend Developer | Data Analyst</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/syed-danish-354259251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:syeddanish1092@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Yusuf section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/yusuf.jpg" alt="yusuf" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Syed khaja Yousufuddin</h3>
-                                    <p class="text-gray-600">Full Stack Developer | IT Support & Services</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/syed-yousufuddin-a64265276?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:skyousuf22@outlook.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Ramachandra section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/ram.jpg" alt="Ramachandra" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Ramachandra</h3>
-                                    <p class="text-gray-600">UI/UX Design | Software Engineer</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/ramchandra-a-730876284" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:rajalasangi@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Next 2 members + First member repeated -->
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Danish section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/danish.jpg" alt="Syed Danish" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Syed Danish</h3>
-                                    <p class="text-gray-600">Backend Developer | Data Analyst</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/syed-danish-354259251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:syeddanish1092@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Yusuf section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/yusuf.jpg" alt="yusuf" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Syed khaja Yousufuddin</h3>
-                                    <p class="text-gray-600">Full Stack Developer | IT Support & Services</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/syed-yousufuddin-a64265276?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:skyousuf22@outlook.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Shrinivas section (duplicated) -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/shri.jpg" alt="Shrinivas Nadager" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Shrinivas Nadager</h3>
-                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/shrinivas-nadager" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:shrinivasnadager03@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Next 2 members + First member of this group repeated -->
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Narasareddy section (duplicated) -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/reddy.jpg" alt="Manikanta" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Narasareddy</h3>
-                                    <p class="text-gray-600">Full Stack Developer | Data Scientist</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/narasareddy-annepu-17a233319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:narasareddy8296@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Basavaraja section (duplicated) -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/basu.jpg" alt="Basavaraj Gurikar" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Basavaraja H. Gurikar</h3>
-                                    <p class="text-gray-600">Security Engineer | Data analyst</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/basavaraj-h-gurikar-95b739284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:basavarajgurikar2004@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Danish section (duplicated) -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/danish.jpg" alt="Syed Danish" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Syed Danish</h3>
-                                    <p class="text-gray-600">Backend Developer | Data Analyst</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/syed-danish-354259251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:syeddanish1092@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="min-w-full sm:min-w-[33.333%] px-4">
-                                <!-- Ramachandra section -->
-                                <div class="text-center">
-                                    <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-primary/20">
-                                        <img src="/static/images/ram.jpg" alt="Ramachandra" 
-                                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                                    </div>
-                                    <h3 class="font-bold text-xl text-gray-800">Ramachandra</h3>
-                                    <p class="text-gray-600">UI/UX Design | Software Engineer</p>
-                                    <div class="flex justify-center gap-4 mt-2">
-                                        <a href="https://www.linkedin.com/in/ramchandra-a-730876284" target="_blank" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                        </a>
-                                        <a href="mailto:rajalasangi@gmail.com" class="text-primary hover:text-secondary">
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Team Carousel Controls -->
-                    <button id="prevTeam" class="absolute left-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-secondary p-3 rounded-full text-white z-10 shadow-lg hover:opacity-90 transition-opacity">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                    </button>
-                    <button id="nextTeam" class="absolute right-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-secondary to-primary p-3 rounded-full text-white z-10 shadow-lg hover:opacity-90 transition-opacity">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </button>
-                    <!-- Team Indicators -->
-                    <div class="flex justify-center mt-8 space-x-2">
-                        <button type="button" class="w-8 h-2 rounded-full bg-gradient-to-r from-primary to-secondary team-indicator"></button>
-                        <button type="button" class="w-2 h-2 rounded-full bg-primary/20 team-indicator"></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section class="bg-neutral py-8 sm:py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
-                <h2 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-primary text-center">Ready to Start Your Project?</h2>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:space-x-4">
-                    <a href="{{ url_for('order') }}" 
-                       class="w-full sm:w-auto bg-accent text-primary font-semibold px-6 py-3 rounded-lg text-center hover:bg-accent/90 transition-colors">
-                        Get Started
-                    </a>
-                    <a href="{{ url_for('consultation') }}"
-                       class="w-full sm:w-auto bg-gradient-to-r from-secondary to-primary text-white px-6 py-3 rounded-lg font-semibold text-center hover:opacity-90 transition">
-                        Contact Us
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="bg-[#512DA8] text-white py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Main Footer Content -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                    <!-- Company Info -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">CodeMates</h3>
-                        <div class="flex items-center mb-4">
-                            <img src="{{ url_for('static', filename='images/fav.png') }}" alt="CodeMates Logo" class="h-10 w-auto mr-2">
-                        </div>
-                        <p class="text-white/90 text-sm leading-relaxed mb-4 text-justify">
-                            Empowering businesses with future-ready digital solutions, delivered by a curated network of top-tier freelancers—making advanced technology accessible, reliable, and impactful.
-                        </p>
-                        <div class="flex space-x-4">
-                            <a href="https://www.linkedin.com/company/codematesltd" class="text-white/90 hover:text-white transition-colors">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                                </svg>
-                            </a>
-                            <a href="https://x.com/codematesltd" class="text-white/90 hover:text-white transition-colors">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"></svg>
-                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                                </svg>
-                            </a>
-                            <a href="https://github.com/Codematesltd" class="text-white/90 hover:text-white transition-colors">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Quick Links -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-                        <ul class="space-y-2">
-                            <li><a href="{{ url_for('index') }}" class="text-white/90 hover:text-white transition-colors">Home</a></li>
-                            <li><a href="{{ url_for('consultation') }}" class="text-white/90 hover:text-white transition-colors">Free Consultation</a></li>
-                            <li><a href="{{ url_for('order') }}" class="text-white/90 hover:text-white transition-colors">Start a Project</a></li>
-                            <li><a href="{{ url_for('client_login') }}" class="text-white/90 hover:text-white transition-colors">Client Portal</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Services -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">Our Services</h3>
-                        <ul class="space-y-2"></ul>
-                            <li class="text-white/90">UI/UX Design</li>
-                            <li class="text-white/90">Frontend Development</li>
-                            <li class="text-white/90">Backend Development</li>
-                            <li class="text-white/90">Full Stack Development</li>
-                            <li class="text-white/90">Data Analysis</li>
-                            <li class="text-white/90">Data Science</li>
-                            <li class="text-white/90">ML Model Development</li>
-                            <li class="text-white/90">Code Debugging</li>
-                        </ul>
-                    </div>
-
-                    <!-- Contact Info -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start space-x-3">
-                                <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                </svg>
-                                <a href="mailto:codematesltd@gmail.com" class="text-white/90 hover:text-white transition-colors">codematesltd@gmail.com</a>
-                            </li>
-                            <li class="flex items-start space-x-3">
-                                <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span class="text-white/90">Kalaburgi, Karnataka, India</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Bottom Footer -->
-                <div class="pt-8 border-t border-white/10">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="text-sm text-white/90">
-                            © 2025 CodeMates. All rights reserved.
-                        </div>
-                        <div class="flex space-x-4 text-sm text-white/90 md:justify-end">
-                            <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                            <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                            <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+{% block content %}
+<!-- Hero Section -->
+<div class="relative">
+    <div class="w-full h-[calc(100vh-4rem)]">
+        <img src="{{ url_for('static', filename='images/poster.jpg') }}" alt="CodeMates Poster" 
+             class="w-full h-full object-contain">
     </div>
+</div>
 
-    <script>
-        // Simple Hero Carousel
-        document.addEventListener('DOMContentLoaded', function() {
-            const heroCarousel = document.getElementById('heroCarousel');
-            const slides = document.querySelectorAll('#heroCarousel > div');
-            const indicators = document.querySelectorAll('[onclick^="moveCarousel"]');
-            let currentSlide = 0;
-            let isTransitioning = false;
+<!-- Services Section -->
+<section class="py-24 bg-gradient-to-br from-[#f7f9fc] to-[#e5f0ff]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold heading-gradient mb-4 font-display">Our Services</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">
+                Empowering businesses with comprehensive data science and development solutions that drive innovation and growth.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-6 bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-primary mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-primary mb-2">Data Science</h3>
+                <p class="text-gray-600">Advanced analytics, machine learning models, and data-driven insights.</p>
+            </div>
 
-            function updateCarousel(smooth = true) {
-                if (isTransitioning) return;
-                
-                if (smooth) {
-                    isTransitioning = true;
-                    heroCarousel.style.transition = 'transform 0.5s ease-in-out';
-                } else {
-                    heroCarousel.style.transition = 'none';
-                }
+            <div class="p-6 bg-gradient-to-br from-[#f1f8ff] to-[#e1f0ff] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-primary mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-primary mb-2">Development</h3>
+                <p class="text-gray-600">Full-stack development, web applications, and custom software solutions.</p>
+            </div>
 
-                heroCarousel.style.transform = `translateX(-${currentSlide * 100}%)`;
-                
-                // Update indicators
-                indicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('bg-white', index === (currentSlide % 5));
-                    indicator.classList.toggle('bg-white/50', index !== (currentSlide % 5));
-                });
-            }
+            <div class="p-6 bg-gradient-to-br from-[#f0f9ff] to-[#e0f7ff] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="text-primary mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-primary mb-2">Deployment</h3>
+                <p class="text-gray-600">Cloud deployment, CI/CD pipelines, and infrastructure management.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            // Handle transition end
-            heroCarousel.addEventListener('transitionend', function() {
-                if (currentSlide >= slides.length - 5) {
-                    currentSlide = 0;
-                    updateCarousel(false);
-                }
-                isTransitioning = false;
-            });
+<!-- Data Science Projects -->
+<section class="py-24 bg-gradient-to-br from-[#fbf8f6] via-[#f0f7ff] to-[#fff7ed]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <!-- Left Image -->
+            <div class="w-full md:w-1/2 transform hover:scale-105 transition-transform duration-300">
+                <img src="{{ url_for('static', filename='images/projects/ds.jpg') }}" 
+                     alt="Data Science Services" 
+                     class="rounded-xl shadow-xl w-full h-auto object-cover border border-orange-50">
+            </div>
+            
+            <!-- Right Content -->
+            <div class="w-full md:w-1/2">
+                <h2 class="text-4xl font-bold heading-gradient mb-6 font-display">Data Science Projects</h2>
+                <p class="text-gray-600 leading-relaxed text-justify">
+                    We provide data science services with a focus on code, analyze and deploy. Our team builds reliable and efficient code to handle complex data challenges. We analyze data to extract meaningful insights that support informed decision-making. Once the solutions are ready, we deploy them into real-world environments to ensure they deliver practical value. From development to implementation, we help clients turn data into measurable business outcomes.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            // Auto advance
-            let autoAdvanceInterval = setInterval(() => {
-                currentSlide = (currentSlide + 1);
-                updateCarousel();
-            }, 3000);
+<!-- Full Stack Projects -->
+<section class="py-24 bg-gradient-to-br from-[#f0f7ff] via-[#fff7ed] to-[#f8f9fa]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row-reverse items-center gap-12">
+            <!-- Right Image -->
+            <div class="w-full md:w-1/2 group">
+                <div class="relative transform hover:scale-105 transition-all duration-500 hover:rotate-1">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-xl blur-lg opacity-25 group-hover:opacity-40 transition duration-500"></div>
+                    <img src="{{ url_for('static', filename='images/projects/full.jpg') }}" 
+                         alt="Full Stack Development" 
+                         class="relative rounded-xl shadow-2xl w-full h-auto object-cover border-2 border-white/20">
+                </div>
+            </div>
+            
+            <!-- Left Content -->
+            <div class="w-full md:w-1/2">
+                <h2 class="text-4xl font-bold heading-gradient mb-6 font-display">Full Stack Projects</h2>
+                <p class="text-gray-600 leading-relaxed text-justify">
+                    We provide full stack development services built around the core approach of code, analyze and deploy. Our team writes clean, scalable code for both front-end and back-end systems, ensuring seamless functionality and user experience. We analyze project requirements, user behavior, and system performance to create efficient and future-ready solutions. Once development is complete, we deploy applications with a focus on stability, security, and scalability. From concept to launch, we deliver complete full stack solutions that drive real business results.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            // Manual navigation
-            window.moveCarousel = function(index) {
-                clearInterval(autoAdvanceInterval);
-                currentSlide = index;
-                updateCarousel();
-                
-                // Restart auto advance
-                autoAdvanceInterval = setInterval(() => {
-                    currentSlide = (currentSlide + 1);
-                    updateCarousel();
-                }, 3000);
-            };
-
-            // Initialize
-            updateCarousel();
-        });
-
-        // Services slider code
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.getElementById('servicesSlider');
-            const slides = slider.children;
-            const totalSlides = slides.length;
-            let currentSlide = 0;
-            const indicators = document.querySelectorAll('#serviceIndicators button');
-            const prevBtn = document.getElementById('prevService');
-            const nextBtn = document.getElementById('nextService');
-            let autoAdvance;
-
-            function updateSlider() {
-                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-                indicators.forEach((btn, idx) => {
-                    btn.classList.toggle('bg-primary/50', idx === currentSlide);
-                    btn.classList.toggle('bg-primary/20', idx !== currentSlide);
-                });
-            }
-
-            function goToSlide(idx) {
-                currentSlide = idx;
-                updateSlider();
-            }
-
-            prevBtn.addEventListener('click', function() {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateSlider();
-            });
-
-            nextBtn.addEventListener('click', function() {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateSlider();
-            });
-
-            indicators.forEach((btn, idx) => {
-                btn.addEventListener('click', function() {
-                    goToSlide(idx);
-                });
-            });
-
-            function startAutoAdvance() {
-                autoAdvance = setInterval(() => {
-                    currentSlide = (currentSlide + 1) % totalSlides;
-                    updateSlider();
-                }, 2500); // 2 seconds interval
-            }
-
-            function stopAutoAdvance() {
-                clearInterval(autoAdvance);
-            }
-
-            slider.parentElement.addEventListener('mouseenter', stopAutoAdvance);
-            slider.parentElement.addEventListener('mouseleave', startAutoAdvance);
-
-            updateSlider();
-            startAutoAdvance();
-        });
-
-        // Team carousel functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const teamCarousel = document.getElementById('teamCarousel');
-            const totalTeamMembers = 6; // Updated to include Ramachandra
-            const visibleMembers = 3; // Number of members shown at once
-            let currentTeamSlide = 0;
-            let isTeamTransitioning = false;
-            let teamAutoAdvance; // Add this variable
-
-            function updateTeamCarousel(smooth = true) {
-                if (isTeamTransitioning) return;
-                
-                const slideWidth = window.innerWidth >= 640 ? 33.333 : 100;
-                
-                if (smooth) {
-                    isTeamTransitioning = true;
-                    teamCarousel.style.transition = 'transform 0.5s ease-in-out';
-                } else {
-                    teamCarousel.style.transition = 'none';
-                }
-
-                teamCarousel.style.transform = `translateX(-${currentTeamSlide * slideWidth}%)`;
-                updateTeamIndicators();
-            }
-
-            // Update slide position on window resize
-            window.addEventListener('resize', () => {
-                updateTeamCarousel(false);
-            });
-
-            function updateTeamIndicators() {
-                const teamIndicators = document.querySelectorAll('.team-indicator');
-                teamIndicators.forEach((indicator, idx) => {
-                    if (idx === currentTeamSlide % totalTeamMembers) {
-                        indicator.classList.add('w-8', 'bg-gradient-to-r', 'from-primary', 'to-secondary');
-                        indicator.classList.remove('w-2', 'bg-primary/20');
-                    } else {
-                        indicator.classList.remove('w-8', 'bg-gradient-to-r', 'from-primary', 'to-secondary');
-                        indicator.classList.add('w-2', 'bg-primary/20');
-                    }
-                });
-            }
-
-            // Handle transition end
-            teamCarousel.addEventListener('transitionend', function() {
-                isTeamTransitioning = false;
-                // Reset to start when reaching the end
-                if (currentTeamSlide >= totalTeamMembers - visibleMembers + 1) {
-                    currentTeamSlide = 0;
-                    updateTeamCarousel(false);
-                }
-            });
-
-            function startTeamAutoAdvance() {
-                if (teamAutoAdvance) clearInterval(teamAutoAdvance);
-                teamAutoAdvance = setInterval(() => {
-                    if (currentTeamSlide < totalTeamMembers - visibleMembers + 1) {
-                        currentTeamSlide++;
-                        updateTeamCarousel();
-                    } else {
-                        currentTeamSlide = 0;
-                        updateTeamCarousel(false);
-                    }
-                }, 3000); // Change slides every 3 seconds
-            }
-
-            function stopTeamAutoAdvance() {
-                if (teamAutoAdvance) {
-                    clearInterval(teamAutoAdvance);
-                    teamAutoAdvance = null;
-                }
-            }
-
-            const prevTeamBtn = document.getElementById('prevTeam');
-            const nextTeamBtn = document.getElementById('nextTeam');
-            prevTeamBtn.addEventListener('click', () => {
-                stopTeamAutoAdvance();
-                currentTeamSlide = (currentTeamSlide - 1 + totalTeamMembers) % totalTeamMembers;
-                updateTeamCarousel();
-                startTeamAutoAdvance();
-            });
-
-            nextTeamBtn.addEventListener('click', () => {
-                stopTeamAutoAdvance();
-                currentTeamSlide = (currentTeamSlide + 1) % totalTeamMembers;
-                updateTeamCarousel();
-                startTeamAutoAdvance();
-            });
-
-            const teamIndicators = document.querySelectorAll('.team-indicator');
-            teamIndicators.forEach((indicator, idx) => {
-                indicator.addEventListener('click', () => {
-                    stopTeamAutoAdvance();
-                    currentTeamSlide = idx;
-                    updateTeamCarousel();
-                    startTeamAutoAdvance();
-                });
-            });
-
-            // Pause on hover
-            teamCarousel.parentElement.addEventListener('mouseenter', stopTeamAutoAdvance);
-            teamCarousel.parentElement.addEventListener('mouseleave', startTeamAutoAdvance);
-
-            // Initialize
-            updateTeamCarousel();
-            startTeamAutoAdvance();
-        });
-
-        // Hamburger menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            let isMenuOpen = false;
-
-            mobileMenuButton.addEventListener('click', function() {
-                isMenuOpen = !isMenuOpen;
-                mobileMenu.classList.toggle('hidden');
-                
-                // Change hamburger to X when open
-                const svg = mobileMenuButton.querySelector('svg');
-                if (isMenuOpen) {
-                    svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />`;
-                } else {
-                    svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />`;
-                }
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
-                if (isMenuOpen && !mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
-                    isMenuOpen = false;
-                    mobileMenu.classList.add('hidden');
-                    const svg = mobileMenuButton.querySelector('svg');
-                    svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />`;
-                }
-            });
-        });
-
-        // Disable right click
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            alert('Right clicking is disabled on this website.');
-        });
-
-        // Disable keyboard shortcuts that could bypass right-click prevention
-        document.addEventListener('keydown', function(e) {
-            // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (Dev tools)
-            // Prevent Ctrl+U (View source)
-            // Prevent Ctrl+S (Save)
-            if (
-                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
-                (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))
-            ) {
-                e.preventDefault();
-            }
-        });
-    </script>
-</body>
-</html>
+<!-- UI/UX Design Projects -->
+<section class="py-24 bg-gradient-to-br from-[#f8f9fa] via-[#f0f7ff] to-[#fbf8f6]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <!-- Left Image -->
+            <div class="w-full md:w-1/2 group">
+                <div class="relative transform hover:scale-105 transition-all duration-500 hover:-rotate-1">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-secondary to-accent rounded-xl blur-lg opacity-25 group-hover:opacity-40 transition duration-500"></div>
+                    <img src="{{ url_for('static', filename='images/projects/ui.jpg') }}" 
+                         alt="UI/UX Design Services" 
+                         class="relative rounded-xl shadow-2xl w-full h-auto object-cover border-2 border-white/20">
+                </div>
+            </div>
+            
+            <!-- Right Content -->
+            <div class="w-full md:w-1/2">
+                <h2 class="text-4xl font-bold heading-gradient mb-6 font-display">UI/UX Design</h2>
+                <p class="text-gray-600 leading-relaxed text-justify">
+                    We offer UI/UX design services centered around the process of code, analyze and deploy. Our team designs intuitive and visually engaging user interfaces backed by thoughtful user experience strategies. We analyze user behavior, business goals and usability data to craft designs that are not only beautiful but functional. Once the design is finalized, we translate it into clean, responsive code and deploy it across platforms for a seamless and consistent user experience. Our goal is to create digital products that are easy to use, impactful and aligned with your brand vision.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

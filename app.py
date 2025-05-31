@@ -730,5 +730,9 @@ def mark_consultation_pending(consultation_id):
     supabase.table('consultations').update({'completed': False}).eq('id', consultation_id).execute()
     return redirect(url_for('admin'))
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
